@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Zinc</string>
+    <string name="button1_text">Button1</string>
 </resources>

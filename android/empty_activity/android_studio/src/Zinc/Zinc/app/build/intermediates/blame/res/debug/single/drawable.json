@@ -100,6 +100,10 @@
         "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable\\abc_cab_background_internal_bg.xml"
     },
     {
+        "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\urlbar_frame.xml",
+        "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\src\\main\\res\\drawable\\urlbar_frame.xml"
+    },
+    {
         "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
         "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\drawable\\abc_list_selector_holo_dark.xml"
     },

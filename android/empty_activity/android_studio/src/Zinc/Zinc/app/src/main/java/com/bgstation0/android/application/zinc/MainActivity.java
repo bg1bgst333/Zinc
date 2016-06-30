@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // WebViewClientのセット.
+        WebView webView = (WebView)findViewById(R.id.webview);  // webViewを取得.
+        webView.setWebViewClient(new CustomWebViewClient());    // setWebViewClientでCustomWebViewClientのインスタンスをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
+
         // Button1を取得し, OnClickListenerとして自身をセット.
         Button button1 = (Button)findViewById(R.id.button1);	// R.id.button1を取得.
         button1.setOnClickListener(this);	// button1.setOnClickListenerでthis(自身)をセット.

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Zinc</string>
     <string name="button1_text">Button1</string>
+    <string name="action_bookmark_manager_text">ブックマークの管理</string>
 </resources>

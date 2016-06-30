@@ -1781,6 +1781,7 @@ containing a value of this type.
         public static final int action_bar_spinner=0x7f0b0001;
         public static final int action_bar_subtitle=0x7f0b0025;
         public static final int action_bar_title=0x7f0b0024;
+        public static final int action_bookmark_manager=0x7f0b0064;
         public static final int action_context_bar=0x7f0b0046;
         public static final int action_divider=0x7f0b005b;
         public static final int action_menu_divider=0x7f0b0002;
@@ -1921,6 +1922,9 @@ containing a value of this type.
         public static final int select_dialog_singlechoice_material=0x7f040025;
         public static final int support_simple_spinner_dropdown_item=0x7f040026;
     }
+    public static final class menu {
+        public static final int menu_main=0x7f0d0000;
+    }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
     }
@@ -1956,8 +1960,9 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with=0x7f060010;
         public static final int abc_shareactionprovider_share_with_application=0x7f060011;
         public static final int abc_toolbar_collapse_description=0x7f060012;
-        public static final int app_name=0x7f060020;
-        public static final int button1_text=0x7f060021;
+        public static final int action_bookmark_manager_text=0x7f060020;
+        public static final int app_name=0x7f060021;
+        public static final int button1_text=0x7f060022;
         public static final int status_bar_notification_info_overflow=0x7f060013;
     }
     public static final class style {

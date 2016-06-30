@@ -1,5 +1,6 @@
 package com.bgstation0.android.application.zinc;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -74,8 +75,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         // 選択されたアイテムごとに振り分ける.
         int id = item.getItemId();  // item.getItemIdで選択されたidを取得.
-        if (id == R.id.action_bookmark_manager){
-            Toast.makeText(this, "action_bookmark_manager", Toast.LENGTH_LONG).show();  // とりあえず"action_bookmark_manager"を表示.
+        if (id == R.id.action_bookmark_manager){    // "ブックマークの管理"
+            // IntentでBookmarkActivityを起動.
+            String pkgName = getPackageName();  // getPackageNameでパッケージ名取得.
+            Intent intent = new Intent();   // intent作成.
+            intent.setClassName(pkgName, pkgName + ".BookmarkActivity");    // intent.setClassNameでBookmarkActivityのパッケージ名を指定.
+            startActivity(intent);  // startActivityでアクティビティ起動.
         }
         return super.onOptionsItemSelected(item);
     }

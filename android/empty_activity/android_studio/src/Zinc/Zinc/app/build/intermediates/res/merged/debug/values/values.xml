@@ -230,6 +230,7 @@
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="action_bookmark_manager_text">ブックマークの管理</string>
+    <string name="activity_bookmark_title_text">ブックマーク</string>
     <string name="app_name">Zinc</string>
     <string name="button1_text">Button1</string>
     <string name="status_bar_notification_info_overflow">999+</string>

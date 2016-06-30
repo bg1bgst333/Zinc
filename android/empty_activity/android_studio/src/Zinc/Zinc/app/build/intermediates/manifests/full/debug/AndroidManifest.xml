@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgstation0.android.application.zinc"
-    android:versionCode="4"
-    android:versionName="0.0.0.0 #4 (Develop/Minami-Urawa)" >
+    android:versionCode="5"
+    android:versionName="0.0.0.0 #5 (Develop/Minami-Urawa)" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -22,6 +22,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.bgstation0.android.application.zinc.BookmarkActivity"
+            android:label="@string/activity_bookmark_title_text"
+            android:parentActivityName="com.bgstation0.android.application.zinc.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.bgstation0.android.application.zinc.MainActivity" />
         </activity>
     </application>
 

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Zinc</string>
     <string name="button1_text">Button1</string>
+    <string name="action_bookmark_add_text">ブックマークの登録</string>
     <string name="action_bookmark_manager_text">ブックマークの管理</string>
     <string name="activity_bookmark_title_text">ブックマーク</string>
+    <string name="bookmark_status_text">ブックマークはありません</string>
+    <string name="label_text_name_text">ページタイトル</string>
+    <string name="label_text_url_text">URL</string>
 </resources>

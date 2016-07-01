@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String pkgName = getPackageName();  // getPackageNameでパッケージ名取得.
             Intent intent = new Intent();   // intent作成.
             intent.setClassName(pkgName, pkgName + ".BookmarkActivity");    // intent.setClassNameでBookmarkActivityのパッケージ名を指定.
-            startActivity(intent);  // startActivityでアクティビティ起動.
+            startActivityForResult(intent, 1001);   // startActivityForResultでrequestCodeを1001として起動.
 
         }
         else if (id == R.id.action_bookmark_add){
@@ -155,4 +155,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    // アクティビティの結果が返ってきたとき.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // 結果に対する処理.
+        super.onActivityResult(requestCode, resultCode, data);  // まず親クラスのonActivityResult.
+        if (resultCode == RESULT_CANCELED) { // RESULT_CANCELEDの場合.
+            return; // 何もせず終了.
+        }
+        Bundle bundle = data.getExtras();   // 引数のdataからdata.getExtrasでbundle取得.
+        switch (requestCode){
+            case 1001:  // ブックマークの管理から戻ってきた場合.
+                if (resultCode == RESULT_OK) {   // RESULT_OKなら.
+                    String name = bundle.getString("selectedName"); // bundle.getStringで"selectedName"をキーとしてnameを取得.
+                    String url = bundle.getString("selectedUrl");   // bundle.getStringで"selectedUrl"をキーとしてurlを取得.
+                    EditText urlBar = (EditText) findViewById(R.id.urlbar);  // urlbsr取得.
+                    urlBar.setText(url);
+                    WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
+                    webView.loadUrl(url);   // webView.loadUrlでurlをロード.
+                }
+                break;  // breakで抜ける.
+            default:
+                break;  // breakで抜ける.
+        }
+    }
 }

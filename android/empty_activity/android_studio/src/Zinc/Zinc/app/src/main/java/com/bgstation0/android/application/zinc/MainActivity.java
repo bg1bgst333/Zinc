@@ -1,6 +1,7 @@
 package com.bgstation0.android.application.zinc;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // WebViewClientのセット.
         WebView webView = (WebView)findViewById(R.id.webview);  // webViewを取得.
-        webView.setWebViewClient(new CustomWebViewClient());    // setWebViewClientでCustomWebViewClientのインスタンスをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
+        CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
+        customwv.activity = this;   // customwv.activityにthis(MainActivity自身)をセット.
+        webView.setWebViewClient(customwv);    // setWebViewClientでCustomWebViewClientのインスタンスcustomwvをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
 
         // Button1を取得し, OnClickListenerとして自身をセット.
         Button button1 = (Button)findViewById(R.id.button1);	// R.id.button1を取得.

@@ -136,12 +136,12 @@
         "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_search_view.xml"
     },
     {
-        "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
-        "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_popup_menu_item_layout.xml"
-    },
-    {
         "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_list_menu_item_checkbox.xml",
         "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_list_menu_item_checkbox.xml"
+    },
+    {
+        "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_popup_menu_item_layout.xml",
+        "source": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.0.0\\res\\layout\\abc_popup_menu_item_layout.xml"
     },
     {
         "merged": "C:\\Project\\Cloud\\github.com\\Zinc\\android\\empty_activity\\android_studio\\src\\Zinc\\Zinc\\app\\build\\intermediates\\res\\merged\\debug\\layout\\abc_action_mode_close_item_material.xml",

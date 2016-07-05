@@ -9,10 +9,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -210,5 +212,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;  // breakで抜ける.
         }
+    }
+
+    // ハードバックキーが押された時.
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+
+        // WebViewを取得.
+        WebView wv = (WebView)findViewById(R.id.webview);   // webViewを取得.
+        EditText urlBar = (EditText)findViewById(R.id.urlbar);  // urlBar取得.
+
+        // ページが進んでいたらページを戻す.
+        if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_BACK && wv.canGoBack() == true) {   // BACKキーが押されて, バック可能な(つまり進んでる)場合.
+            // バックフォワードリストの取得.
+            WebBackForwardList wvBackFwdList = wv.copyBackForwardList();    // wv.copyBackForwardListでリストを取得.
+            int page = wvBackFwdList.getCurrentIndex(); // wvBackFwdList.getCurrentIndexで何ページ目かを取得.
+            if (page >= 1){ // 1ページ目以上なら.
+                String prevUrl = wvBackFwdList.getItemAtIndex(page - 1).getUrl();   // wvBackFwdList.getItemAtIndex(page - 1).getUrlで1つ前のURLを取得.
+                String show = null; // 表示するURLのshowをnullにセット.
+                if (prevUrl.startsWith("http://")) {    // "http://"の場合.
+                    show = prevUrl.substring(7);    // showにprevUrlの7文字目から始まる文字列を代入.
+                }
+                else{   // "https://"の場合と考えられる.
+                    show = prevUrl; // showにそのままprevUrlを代入.
+                }
+                urlBar.setText(show);    // urlBar.setTextで1つ前のURLをセット.
+                wv.goBack();    // wv.goBackで1つ戻る.
+            }
+        }
+        else{
+            // 親クラスに任せる.
+            super.onKeyDown(keyCode, event);    // super.onKeyDownに任せる.
+        }
+
+        // trueを返す.
+        return true;
+
     }
 }

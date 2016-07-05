@@ -58,7 +58,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     // WebViewオブジェクトwebViewでurlのサイトを表示.
                     WebView webView = (WebView)findViewById(R.id.webview);	// findViewByIdでwebViewを取得.
-                    webView.loadUrl(url);	// webView.loadUrlでurlのサイトを表示.
+                    String load = null; // ロードするURLのloadをnullにセット.
+                    String show = null; // 表示するURlのshowをurlにセット.
+                    if (url.startsWith("https://")) {    // "https://"の場合.
+                        load = url; // loadにurlをそのまま代入.
+                        show = url; // showにurlをそのまま代入.
+                    }
+                    else if (url.startsWith("http://")){    // "http://"の場合.
+                        load = url; // loadにurlをそのまま代入.
+                        show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+                    }
+                    else {   // それ以外.
+                        load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
+                        show = url; // showにurlをそのまま代入.
+                    }
+                    urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
+                    webView.loadUrl(load);	// webView.loadUrlでloadのサイトを表示.
 
                 }
 
@@ -173,9 +188,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String name = bundle.getString("selectedName"); // bundle.getStringで"selectedName"をキーとしてnameを取得.
                     String url = bundle.getString("selectedUrl");   // bundle.getStringで"selectedUrl"をキーとしてurlを取得.
                     EditText urlBar = (EditText) findViewById(R.id.urlbar);  // urlbsr取得.
-                    urlBar.setText(url);
+                    String load = null; // ロードするURLのloadをnullにセット.
+                    String show = null; // 表示するURlのshowをurlにセット.
+                    if (url.startsWith("https://")) {    // "https://"の場合.
+                        load = url; // loadにurlをそのまま代入.
+                        show = url; // showにurlをそのまま代入.
+                    }
+                    else if (url.startsWith("http://")){    // "http://"の場合.
+                        load = url; // loadにurlをそのまま代入.
+                        show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+                    }
+                    else {   // それ以外.
+                        load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
+                        show = url; // showにurlをそのまま代入.
+                    }
+                    urlBar.setText(show);   // urlBarはshowをセット.
                     WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
-                    webView.loadUrl(url);   // webView.loadUrlでurlをロード.
+                    webView.loadUrl(load);   // webView.loadUrlでloadをロード.
                 }
                 break;  // breakで抜ける.
             default:

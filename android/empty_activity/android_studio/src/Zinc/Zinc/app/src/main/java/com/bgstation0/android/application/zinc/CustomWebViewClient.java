@@ -1,10 +1,13 @@
 package com.bgstation0.android.application.zinc;
 
 import android.app.Activity;
+import android.content.ContentValues;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by bg1.
@@ -12,8 +15,10 @@ import android.widget.EditText;
 public class CustomWebViewClient extends WebViewClient{
 
     // メンバフィールドの定義.
-    public Activity activity = null;    // Activityインスタンスactivityをnullにセット.
+    public MainActivity activity = null;    // Activityインスタンスactivityをnullにセット.
 
+    // リンクURLクリックやリダイレクトなどでロードURLが上書きされた時.
+    @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url){
         // リンクをクリックした時に, リンク先のURLをEditTextに反映.
         if (activity != null) {  // activityがあれば.
@@ -30,8 +35,38 @@ public class CustomWebViewClient extends WebViewClient{
         return super.shouldOverrideUrlLoading(view, url);
         //return false; // こっちでも大丈夫.
     }
+
+    // リンクURLクリックやリダイレクトなどでロードURLが上書きされた時.(API Level 24以降の時.)
+    @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request){
         return super.shouldOverrideUrlLoading(view, request);
         //return false; // こっちでも大丈夫.
+    }
+
+    // ページのロードが終了した時.
+    @Override
+    public void onPageFinished (WebView view, String url){
+        super.onPageFinished(view, url);
+        // タイトルの取得..
+        String name = view.getTitle();  // view.getTitleでタイトルを取得.(urlは引数を使う.)
+        // historyテーブルに登録.
+        long id = -1;   // insertの戻り値を格納するidに-1をセット.
+        try{
+            if (activity.sqlite == null) {   // activity.sqliteがnullなら.
+                activity.sqlite = activity.hlpr.getWritableDatabase();    // hactivity.hlpr.getWritableDatabase()でDBの書き込みが可能に.
+            }
+            ContentValues values = new ContentValues(); // テーブルに挿入する値の箱ContentValuesを用意.
+            values.put("name", name);    // "name"をキーにnameをput.
+            values.put("url", url);      // "url"をキーにurlをput..
+            id = activity.sqlite.insertOrThrow("history", null, values);    // activity.sqlite.insertOrThrowでhistoryテーブルにinsert.
+        }
+        catch (Exception ex) {
+            Log.d("Zinc", ex.toString());
+        }
+        finally {
+            activity.sqlite.close();
+            activity.sqlite = null;
+        }
+        Toast.makeText(activity, name, Toast.LENGTH_LONG).show();    // 読み込んだページのタイトルを表示.
     }
 }

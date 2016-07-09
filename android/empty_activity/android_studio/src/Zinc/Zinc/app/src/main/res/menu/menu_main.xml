@@ -5,4 +5,6 @@
         android:orderInCategory="101" app:showAsAction="never" />
     <item android:id="@+id/action_bookmark_manager" android:title="@string/action_bookmark_manager_text"
         android:orderInCategory="102" app:showAsAction="never" />
+    <item android:id="@+id/action_history" android:title="@string/action_history_text"
+        android:orderInCategory="103" app:showAsAction="never" />
 </menu>

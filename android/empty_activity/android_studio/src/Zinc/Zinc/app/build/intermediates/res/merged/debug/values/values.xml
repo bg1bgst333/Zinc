@@ -236,7 +236,7 @@
     <string name="activity_history_title_text">履歴</string>
     <string name="app_name">Zinc</string>
     <string name="bookmark_status_text">ブックマークはありません</string>
-    <string name="button1_text">Button1</string>
+    <string name="button1_text"/>
     <string name="history_status_text">履歴はありません</string>
     <string name="label_text_name_text">ページタイトル</string>
     <string name="label_text_url_text">URL</string>

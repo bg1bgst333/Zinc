@@ -14,13 +14,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {    // View.OnClickListenerを実装.
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {    // View.OnClickListener, TextView.OnEditorActionListenerを実装.
 
     // メンバフィールドの定義.
     public DBHelper hlpr = null;    // DBHelper型hlprにnullをセット.
@@ -37,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         customwv.activity = this;   // customwv.activityにthis(MainActivity自身)をセット.
         webView.setWebViewClient(customwv);    // setWebViewClientでCustomWebViewClientのインスタンスcustomwvをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
 
-        // Button1を取得し, OnClickListenerとして自身をセット.
+        // button1を取得し, OnClickListenerとして自身をセット.
         Button button1 = (Button) findViewById(R.id.button1);    // R.id.button1を取得.
         button1.setOnClickListener(this);    // button1.setOnClickListenerでthis(自身)をセット.
+
+        // urlBarを取得し, OnEditorActionListenerとして自身をセット.
+        EditText urlBar = (EditText) findViewById(R.id.urlbar); // R.id.urlbarを取得.
+        urlBar.setOnEditorActionListener(this); // urlBar.setOnEditorActionListenerでthis(自身)をセット.
 
         // DBHelperの作成はここに移動.
         hlpr = new DBHelper(getApplicationContext());   // DBHelperを生成.
@@ -55,33 +62,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button1:
 
                 // button1ブロック
-            {
+                {
 
-                // urlBarのurlを取得.
-                EditText urlBar = (EditText) findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
-                String url = urlBar.getText().toString();    // urlBar.getText().toString()でurlを取得.
+                    // urlBarを空にする.
+                    EditText urlBar = (EditText) findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
+                    urlBar.setText(""); // urlBar.setTextで""をセット.
 
-                // WebViewオブジェクトwebViewでurlのサイトを表示.
-                WebView webView = (WebView) findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
-                String load = null; // ロードするURLのloadをnullにセット.
-                String show = null; // 表示するURlのshowをurlにセット.
-                if (url.startsWith("https://")) {    // "https://"の場合.
-                    load = url; // loadにurlをそのまま代入.
-                    show = url; // showにurlをそのまま代入.
-                } else if (url.startsWith("http://")) {    // "http://"の場合.
-                    load = url; // loadにurlをそのまま代入.
-                    show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
-                } else {   // それ以外.
-                    load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
-                    show = url; // showにurlをそのまま代入.
                 }
-                urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
-                webView.loadUrl(load);    // webView.loadUrlでloadのサイトを表示.
 
-            }
-
-            // 抜ける.
-            break;    // breakで抜ける.
+                // 抜ける.
+                break;    // breakで抜ける.
 
             // それ以外の時.
             default:
@@ -90,6 +80,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;    // breakで抜ける.
 
         }
+
+    }
+
+    // TextView.OnEditorActionListenerインタフェースのオーバーライドメソッドを実装.
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+
+        // Enterキーが押された時.
+        if (actionId == EditorInfo.IME_ACTION_DONE){   // EditorInfo.IME_ACTION_DONEの時.
+
+            // ソフトウェアキーボードの非表示.
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);    // inputMethodManagerを取得.
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);  // inputMethodManager.hideSoftInputFromWindowでソフトウェアキーボードの非表示.
+
+            // urlBarのurlを取得.
+            EditText urlBar = (EditText) findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
+            String url = urlBar.getText().toString();    // urlBar.getText().toString()でurlを取得.
+
+            // WebViewオブジェクトwebViewでurlのサイトを表示.
+            WebView webView = (WebView) findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
+            String load = null; // ロードするURLのloadをnullにセット.
+            String show = null; // 表示するURlのshowをurlにセット.
+            if (url.startsWith("https://")) {    // "https://"の場合.
+                load = url; // loadにurlをそのまま代入.
+                show = url; // showにurlをそのまま代入.
+            }
+            else if (url.startsWith("http://")) {    // "http://"の場合.
+                load = url; // loadにurlをそのまま代入.
+                show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+            }
+            else {   // それ以外.
+                load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
+                show = url; // showにurlをそのまま代入.
+            }
+            urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
+            webView.loadUrl(load);    // webView.loadUrlでloadのサイトを表示.
+
+            // trueを返す.
+            return true;
+
+        }
+
+        // falseを返す.
+        return false;
 
     }
 

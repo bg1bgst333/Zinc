@@ -17,6 +17,10 @@ uses-permission#android.permission.INTERNET
 ADDED from C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\src\main\AndroidManifest.xml:5:5-67
 	android:name
 		ADDED from C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\src\main\AndroidManifest.xml:6:5-81
+	android:name
+		ADDED from C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\src\main\AndroidManifest.xml:6:22-78
 application
 ADDED from C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\src\main\AndroidManifest.xml:7:5-38:19
 MERGED from [com.android.support:appcompat-v7:24.0.0] C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.0.0\AndroidManifest.xml:25:5-20

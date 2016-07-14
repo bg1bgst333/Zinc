@@ -1785,6 +1785,7 @@ containing a value of this type.
         public static final int action_bookmark_manager=0x7f0b0070;
         public static final int action_context_bar=0x7f0b0046;
         public static final int action_divider=0x7f0b005f;
+        public static final int action_download=0x7f0b0072;
         public static final int action_history=0x7f0b0071;
         public static final int action_menu_divider=0x7f0b0002;
         public static final int action_menu_presenter=0x7f0b0003;

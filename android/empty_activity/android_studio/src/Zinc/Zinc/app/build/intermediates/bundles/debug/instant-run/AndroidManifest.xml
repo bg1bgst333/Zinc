@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgstation0.android.application.zinc"
-    android:versionCode="13"
-    android:versionName="0.0.0.0 #13 (Develop/Minami-Urawa)" >
+    android:versionCode="14"
+    android:versionName="0.0.0.0 #14 (Develop/Minami-Urawa)" >
 
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="24" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="com.android.tools.fd.runtime.BootstrapApplication"

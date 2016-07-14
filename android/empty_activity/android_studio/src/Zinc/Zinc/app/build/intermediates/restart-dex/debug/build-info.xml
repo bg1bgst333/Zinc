@@ -4,7 +4,7 @@
     api-level="18"
     density="xhdpi"
     format="7"
-    timestamp="879703628823278"
+    timestamp="51567766223467"
     token="2234769350861870131" >
 
     <task
@@ -20,6 +20,6 @@
         name="verifier"
         duration="0" />
 
-    <build timestamp="879703628823278" />
+    <build timestamp="51567766223467" />
 
 </instant-run>

@@ -1,10 +1,14 @@
 package com.bgstation0.android.application.zinc;
 
+import android.app.DownloadManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // メンバフィールドの定義.
     public DBHelper hlpr = null;    // DBHelper型hlprにnullをセット.
     public SQLiteDatabase sqlite = null;    // SQLiteDatabase型sqliteにnullをセット.
+    public DownloadManager downloadManager = null;  // DownloadManager型downloadManagerにnullをセット.
+    public Uri downloadUri = null;
+    public String downloadFilename = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // DBHelperの作成はここに移動.
         hlpr = new DBHelper(getApplicationContext());   // DBHelperを生成.
+
+        // DownloadManagerの確保.
+        if (downloadManager == null) {   // nullなら.
+            downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);  // getSystemServiceでDOWNLOAD_SERVICEを取得.
+        }
+
     }
 
     // View.OnClickListenerインタフェースのオーバーライドメソッドを実装.
@@ -205,6 +218,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.setClassName(pkgName, pkgName + ".HistoryActivity");    // intent.setClassNameでHistoryActivityのパッケージ名を指定.
             startActivityForResult(intent, 1002);   // startActivityForResultでrequestCodeを1002として起動.
 
+        } else if (id == R.id.action_download) { // "ダウンロード"
+
+            // URLやファイル名の取得.
+            WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
+            String strUrl = webView.getUrl();   // webView.getUrlでURL文字列を取得し, strUrlに格納.
+            if (strUrl == null) {    // 取得できない場合.
+                EditText urlBar = (EditText) findViewById(R.id.urlbar);  // urlBarから直接取得.
+                strUrl = urlBar.getText().toString();   // urlBar.getText().toString()でstrUrlに格納.
+            }
+            if (!strUrl.startsWith("http://")){ // "http://"が無い場合.
+                strUrl = "http://" + strUrl;    // 補完.
+            }
+            downloadUri = Uri.parse(strUrl);  // strUrlをUri.parseでパースし, downloadUriに格納.
+            downloadFilename = downloadUri.getLastPathSegment(); // downloadUri.getLastPathSegmentで最後のパス区切り(ファイル名の部分)を取り出し, downloadFilenameに格納.
+            // ダウンロードリクエストの作成.
+            DownloadManager.Request request = new DownloadManager.Request(downloadUri); //DownloadManager.Requestオブジェクトrequestを作成.
+            request.setDestinationInExternalFilesDir(getApplicationContext(), Environment.DIRECTORY_DOWNLOADS, "/" + downloadFilename); // request.setDestinationInExternalFilesDirでDownloadsディレクトリ直下にファイルdownloadFilenameをダウンロードするように指定する.
+            request.setTitle("Zinc-Download");  // request.setTitleでタイトルを"Zinc-Download"にする.
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);  // request.setAllowedNetworkTypesでモバイルネットワーク, Wifiともに許可.
+            request.setMimeType("application/octet-stream");    // request.setMimeTypeでMIMEタイプは"application/octet-stream"にしておく.
+            // ダウンロードレシーバーの作成.
+            DownloadReceiver downloadReceiver = new DownloadReceiver();
+            downloadReceiver.activity = this;   // downloadReceiver.activityにthis(MainActivity自身)をセット.
+            registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)); // registerReceiverでレシーバーにダウンロード完了時のインテントフィルタを登録.
+            long downloadId = downloadManager.enqueue(request); // downloadManager.enqueueでrequestを登録.
         }
         return super.onOptionsItemSelected(item);
     }

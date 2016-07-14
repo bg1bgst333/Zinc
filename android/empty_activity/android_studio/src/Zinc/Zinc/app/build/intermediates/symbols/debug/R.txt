@@ -492,6 +492,7 @@ int id action_bookmark_add 0x7f0b006f
 int id action_bookmark_manager 0x7f0b0070
 int id action_context_bar 0x7f0b0046
 int id action_divider 0x7f0b005f
+int id action_download 0x7f0b0072
 int id action_history 0x7f0b0071
 int id action_menu_divider 0x7f0b0002
 int id action_menu_presenter 0x7f0b0003

@@ -2,7 +2,9 @@ package com.bgstation0.android.application.zinc;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.graphics.Bitmap;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -43,10 +45,27 @@ public class CustomWebViewClient extends WebViewClient{
         //return false; // こっちでも大丈夫.
     }
 
+    // ページのロードを開始する時.
+   @Override
+    public void onPageStarted(final WebView view, final String url, final Bitmap favicon){
+        super.onPageStarted(view, url, favicon);
+
+        // progressBarがあれば表示.
+       if (activity.progressBar != null){   // activity.progressBarがnull.
+           activity.progressBar.setVisibility(View.VISIBLE);  // setVisibilityでVISIBLEにする.
+       }
+    }
+
     // ページのロードが終了した時.
     @Override
     public void onPageFinished (WebView view, String url){
         super.onPageFinished(view, url);
+
+        // progressBarがあれば非表示.
+        if (activity.progressBar != null){   // activity.progressBarがnull.
+            activity.progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
+        }
+
         // タイトルの取得..
         String name = view.getTitle();  // view.getTitleでタイトルを取得.(urlは引数を使う.)
         // historyテーブルに登録.
@@ -67,6 +86,7 @@ public class CustomWebViewClient extends WebViewClient{
             activity.sqlite.close();
             activity.sqlite = null;
         }
+
         Toast.makeText(activity, name, Toast.LENGTH_LONG).show();    // 読み込んだページのタイトルを表示.
     }
 }

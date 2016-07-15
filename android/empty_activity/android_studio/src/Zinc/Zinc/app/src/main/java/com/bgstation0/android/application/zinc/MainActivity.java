@@ -24,6 +24,7 @@ import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public DownloadManager downloadManager = null;  // DownloadManager型downloadManagerにnullをセット.
     public Uri downloadUri = null;
     public String downloadFilename = null;
+    public ProgressBar progressBar = null;  // ProgressBar型progressBarにnullをセット.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
         CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
         customwv.activity = this;   // customwv.activityにthis(MainActivity自身)をセット.
-        webView.setWebViewClient(customwv);    // setWebViewClientでCustomWebViewClientのインスタンスcustomwvをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
+        webView.setWebViewClient(customwv);    // webView.setWebViewClientでCustomWebViewClientのインスタンスcustomwvをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
+        CustomWebChromeClient customwc = new CustomWebChromeClient();   // CustomWebChromeClientのインスタンス生成.
+        customwc.activity = this;   // customwc.activityにthis(MainActivity自身)をセット.
+        webView.setWebChromeClient(customwc);    // webView.setWebChromeClientでCustomWebChromeClientのインスタンスcustomwcをセット.
 
         // button1を取得し, OnClickListenerとして自身をセット.
         Button button1 = (Button) findViewById(R.id.button1);    // R.id.button1を取得.
@@ -63,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);  // getSystemServiceでDOWNLOAD_SERVICEを取得.
         }
 
+        // progressBarは最初は隠しておく.
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);  // progressBarを取得.
+        progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
     }
 
     // View.OnClickListenerインタフェースのオーバーライドメソッドを実装.

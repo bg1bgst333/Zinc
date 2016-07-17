@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // webViewの初期化.
         WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
-        // savedInstanceStateがある場合, webViewの状態を復元.
-        if (savedInstanceState != null){    // savedInstanceStateがnullでない場合.
-            webView.restoreState(savedInstanceState);   // webView.restoreStateでsavedInstanceStateから状態を復元.
-        }
 
         // WebViewClientのセット.
         CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
@@ -330,17 +326,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // trueを返す.
         return true;
-
-    }
-
-    // アクティビティのインスタンスの一時的な保存が要求された時.
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-
-        // WebViewの状態を保存.
-        WebView webView = (WebView)findViewById(R.id.webview);  // webViewを取得.
-        webView.saveState(outState);    // webView.saveStateでwebViewの状態をoutStateに保存.
 
     }
 

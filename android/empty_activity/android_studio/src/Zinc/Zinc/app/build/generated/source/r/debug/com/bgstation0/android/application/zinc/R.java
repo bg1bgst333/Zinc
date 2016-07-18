@@ -1781,17 +1781,18 @@ containing a value of this type.
         public static final int action_bar_spinner=0x7f0b0001;
         public static final int action_bar_subtitle=0x7f0b0025;
         public static final int action_bar_title=0x7f0b0024;
-        public static final int action_bookmark_add=0x7f0b0070;
-        public static final int action_bookmark_manager=0x7f0b0071;
+        public static final int action_bookmark_add=0x7f0b0071;
+        public static final int action_bookmark_manager=0x7f0b0072;
         public static final int action_context_bar=0x7f0b0046;
         public static final int action_divider=0x7f0b0060;
-        public static final int action_download=0x7f0b0073;
-        public static final int action_history=0x7f0b0072;
+        public static final int action_download=0x7f0b0074;
+        public static final int action_history=0x7f0b0073;
         public static final int action_menu_divider=0x7f0b0002;
         public static final int action_menu_presenter=0x7f0b0003;
         public static final int action_mode_bar=0x7f0b0042;
         public static final int action_mode_bar_stub=0x7f0b0041;
         public static final int action_mode_close_button=0x7f0b0026;
+        public static final int action_search=0x7f0b0070;
         public static final int activity_chooser_view_content=0x7f0b0027;
         public static final int add=0x7f0b0013;
         public static final int alertTitle=0x7f0b0033;
@@ -1983,14 +1984,15 @@ containing a value of this type.
         public static final int action_bookmark_manager_text=0x7f060021;
         public static final int action_download_text=0x7f060022;
         public static final int action_history_text=0x7f060023;
-        public static final int activity_bookmark_title_text=0x7f060024;
-        public static final int activity_history_title_text=0x7f060025;
-        public static final int app_name=0x7f060026;
-        public static final int bookmark_status_text=0x7f060027;
-        public static final int button1_text=0x7f060028;
-        public static final int history_status_text=0x7f060029;
-        public static final int label_text_name_text=0x7f06002a;
-        public static final int label_text_url_text=0x7f06002b;
+        public static final int action_search_text=0x7f060024;
+        public static final int activity_bookmark_title_text=0x7f060025;
+        public static final int activity_history_title_text=0x7f060026;
+        public static final int app_name=0x7f060027;
+        public static final int bookmark_status_text=0x7f060028;
+        public static final int button1_text=0x7f060029;
+        public static final int history_status_text=0x7f06002a;
+        public static final int label_text_name_text=0x7f06002b;
+        public static final int label_text_url_text=0x7f06002c;
         public static final int status_bar_notification_info_overflow=0x7f060013;
     }
     public static final class style {

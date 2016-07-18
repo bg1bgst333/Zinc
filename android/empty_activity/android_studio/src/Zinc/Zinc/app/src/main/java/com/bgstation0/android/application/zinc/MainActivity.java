@@ -8,14 +8,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -28,7 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {    // View.OnClickListener, TextView.OnEditorActionListenerを実装.
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{    // View.OnClickListener, TextView.OnEditorActionListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListenerを実装.
 
     // メンバフィールドの定義.
     public DBHelper hlpr = null;    // DBHelper型hlprにnullをセット.
@@ -154,6 +158,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // リソースからメニュー作成.
         getMenuInflater().inflate(R.menu.menu_main, menu); // getMenuInflater().inflate()でmenu_mainからメニュー作成.
+        // searchViewの取得.
+        MenuItem searchItem = menu.findItem(R.id.action_search);    // menu.findItemでsearchItemを取得.
+        //searchItem.setOnActionExpandListener(this); // searchItem.setOnActionExpandListenerでthis(自分自身)を渡す.
+        MenuItemCompat.setOnActionExpandListener(searchItem, this); // 上のだと落ちてしまうので, MenuItemCompatのものを使う.
+        SearchView searchView = (SearchView)searchItem.getActionView(); // searchItem.getActionViewでsearchViewを取得.
+        searchView.setOnQueryTextListener(this);    // searchView.setOnQueryTextListenerでthis(自分自身)を渡す.
         return true;    // trueを返す.
     }
 
@@ -327,6 +337,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // trueを返す.
         return true;
 
+    }
+
+    // クエリ文字列が変更された時.
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    // クエリ文字列が確定した時.
+    @Override
+    public boolean onQueryTextSubmit(String query){
+        // webViewの中からすべて検索.
+        WebView webView = (WebView)findViewById(R.id.webview);  // webViewを取得.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {  // API level 16以上なら.
+            webView.findAllAsync(query);    // webView.findAllAsyncで検索.(API level 16で登場.)
+        }
+        else {  // API level 15なら.
+            webView.findAll(query); // webView.findAllで検索.(API level 16ではduplicate.)
+        }
+        return false;
+    }
+
+    // SearchViewの入力画面を開いた時.
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem item) {
+        return true;
+    }
+
+    // SearchViewの入力画面を閉じた時.
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem item){
+        // 検索結果をクリア.
+        WebView webView = (WebView)findViewById(R.id.webview);  // webViewを取得.
+        webView.clearMatches(); // webView.clearMatchesで検索結果をクリア.
+        return true;
     }
 
     // アクティビティが破棄された時.

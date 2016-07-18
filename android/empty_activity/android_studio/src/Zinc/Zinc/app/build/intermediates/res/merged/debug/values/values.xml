@@ -233,6 +233,7 @@
     <string name="action_bookmark_manager_text">ブックマークの管理</string>
     <string name="action_download_text">ダウンロード</string>
     <string name="action_history_text">履歴</string>
+    <string name="action_search_text">ページ内検索</string>
     <string name="activity_bookmark_title_text">ブックマーク</string>
     <string name="activity_history_title_text">履歴</string>
     <string name="app_name">Zinc</string>

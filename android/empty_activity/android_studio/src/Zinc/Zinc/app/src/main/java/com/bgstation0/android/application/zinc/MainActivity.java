@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +31,11 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{    // View.OnClickListener, TextView.OnEditorActionListener, SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListenerを実装.
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{    // SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListenerを実装.
 
     // メンバフィールドの定義.
     public DBHelper hlpr = null;    // DBHelper型hlprにnullをセット.
@@ -40,31 +43,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public DownloadManager downloadManager = null;  // DownloadManager型downloadManagerにnullをセット.
     public Uri downloadUri = null;
     public String downloadFilename = null;
-    public ProgressBar progressBar = null;  // ProgressBar型progressBarにnullをセット.
+    public StringBuffer tabTagName = null; // StringBuffer型tabTagNameにnullをセット.
+    public int tabNo = 1;   // int型tabNoに1をセット.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // webViewの初期化.
-        WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
-
-        // WebViewClientのセット.
-        CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
-        customwv.activity = this;   // customwv.activityにthis(MainActivity自身)をセット.
-        webView.setWebViewClient(customwv);    // webView.setWebViewClientでCustomWebViewClientのインスタンスcustomwvをセット.(これをやらないと一部のサイトでChromeにリダイレクトしてしまう.)
-        CustomWebChromeClient customwc = new CustomWebChromeClient();   // CustomWebChromeClientのインスタンス生成.
-        customwc.activity = this;   // customwc.activityにthis(MainActivity自身)をセット.
-        webView.setWebChromeClient(customwc);    // webView.setWebChromeClientでCustomWebChromeClientのインスタンスcustomwcをセット.
-
-        // button1を取得し, OnClickListenerとして自身をセット.
-        Button button1 = (Button) findViewById(R.id.button1);    // R.id.button1を取得.
-        button1.setOnClickListener(this);    // button1.setOnClickListenerでthis(自身)をセット.
-
-        // urlBarを取得し, OnEditorActionListenerとして自身をセット.
-        EditText urlBar = (EditText) findViewById(R.id.urlbar); // R.id.urlbarを取得.
-        urlBar.setOnEditorActionListener(this); // urlBar.setOnEditorActionListenerでthis(自身)をセット.
 
         // DBHelperの作成はここに移動.
         hlpr = new DBHelper(getApplicationContext());   // DBHelperを生成.
@@ -74,82 +59,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);  // getSystemServiceでDOWNLOAD_SERVICEを取得.
         }
 
-        // progressBarは最初は隠しておく.
-        progressBar = (ProgressBar)findViewById(R.id.progressBar);  // progressBarを取得.
-        progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
-    }
-
-    // View.OnClickListenerインタフェースのオーバーライドメソッドを実装.
-    public void onClick(View v) {    // onClickをオーバーライド.
-
-        // ボタンのidをごとに処理を振り分ける.
-        switch (v.getId()) {    // v.getIdでView(Button)のidを取得.
-
-            // R.id.button1の時.
-            case R.id.button1:
-
-                // button1ブロック
-                {
-
-                    // urlBarを空にする.
-                    EditText urlBar = (EditText) findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
-                    urlBar.setText(""); // urlBar.setTextで""をセット.
-
-                }
-
-                // 抜ける.
-                break;    // breakで抜ける.
-
-            // それ以外の時.
-            default:
-
-                // 抜ける.
-                break;    // breakで抜ける.
-
-        }
-
-    }
-
-    // TextView.OnEditorActionListenerインタフェースのオーバーライドメソッドを実装.
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-
-        // Enterキーが押された時.
-        if (actionId == EditorInfo.IME_ACTION_DONE){   // EditorInfo.IME_ACTION_DONEの時.
-
-            // ソフトウェアキーボードの非表示.
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);    // inputMethodManagerを取得.
-            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);  // inputMethodManager.hideSoftInputFromWindowでソフトウェアキーボードの非表示.
-
-            // urlBarのurlを取得.
-            EditText urlBar = (EditText) findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
-            String url = urlBar.getText().toString();    // urlBar.getText().toString()でurlを取得.
-
-            // WebViewオブジェクトwebViewでurlのサイトを表示.
-            WebView webView = (WebView) findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
-            String load = null; // ロードするURLのloadをnullにセット.
-            String show = null; // 表示するURlのshowをurlにセット.
-            if (url.startsWith("https://")) {    // "https://"の場合.
-                load = url; // loadにurlをそのまま代入.
-                show = url; // showにurlをそのまま代入.
-            }
-            else if (url.startsWith("http://")) {    // "http://"の場合.
-                load = url; // loadにurlをそのまま代入.
-                show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
-            }
-            else {   // それ以外.
-                load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
-                show = url; // showにurlをそのまま代入.
-            }
-            urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
-            webView.loadUrl(load);    // webView.loadUrlでloadのサイトを表示.
-
-            // trueを返す.
-            return true;
-
-        }
-
-        // falseを返す.
-        return false;
+        // FragmentManagerの取得.
+        FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでFragmentManagerを取得.(support.v4の場合.)
+        // tabHostの取得.
+        FragmentTabHost tabHost = (FragmentTabHost)findViewById(R.id.tabhost);  // tabHostを取得.
+        // tabHostの準備.
+        tabHost.setup(this, fragmentManager, R.id.content); // tabHost.setupで準備.
+        // タブタグネームのセット.
+        tabTagName = new StringBuffer("tab" + tabNo); // tabTagNameは"tab + tabNoとする.
+        // タブスペックの作成.
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabTagName.toString());    // tabHost.newTabSpecでtabSpecを作成.
+        // タブの表示名のセット.
+        tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
+        // タブの追加.
+        tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
 
     }
 
@@ -241,12 +164,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.action_download) { // "ダウンロード"
 
             // URLやファイル名の取得.
-            WebView webView = (WebView) findViewById(R.id.webview);  // webViewを取得.
-            String strUrl = webView.getUrl();   // webView.getUrlでURL文字列を取得し, strUrlに格納.
-            if (strUrl == null) {    // 取得できない場合.
-                EditText urlBar = (EditText) findViewById(R.id.urlbar);  // urlBarから直接取得.
-                strUrl = urlBar.getText().toString();   // urlBar.getText().toString()でstrUrlに格納.
-            }
+            // URLバーからとるように変更.
+            EditText urlBar = (EditText) findViewById(R.id.urlbar);  // urlBarから直接取得.
+            String strUrl = urlBar.getText().toString();   // urlBar.getText().toString()でstrUrlに格納.
             if (!strUrl.startsWith("http://")){ // "http://"が無い場合.
                 strUrl = "http://" + strUrl;    // 補完.
             }

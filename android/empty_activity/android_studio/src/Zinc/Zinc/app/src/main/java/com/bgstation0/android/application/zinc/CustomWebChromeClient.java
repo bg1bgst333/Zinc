@@ -9,15 +9,15 @@ import android.webkit.WebView;
 public class CustomWebChromeClient extends WebChromeClient{
 
     // メンバフィールドの定義.
-    public MainActivity activity = null;    // Activityインスタンスactivityをnullにセット.
+    public WebViewTabFragment fragment = null;    // Activityインスタンスactivityをnullにセット.
 
     // 進捗度が変化した時.
     @Override
     public void onProgressChanged(WebView view, int progress){
 
         // progressBarがあれば, 進捗をセット.
-        if (activity.progressBar != null){  // activity.progressBarがnullでない.
-            activity.progressBar.setProgress(progress); // activity.progressBar.setProgressにprogressをセット.
+        if (fragment.progressBar != null){  // fragment.progressBarがnullでない.
+            fragment.progressBar.setProgress(progress); // fragment.progressBar.setProgressにprogressをセット.
         }
 
     }

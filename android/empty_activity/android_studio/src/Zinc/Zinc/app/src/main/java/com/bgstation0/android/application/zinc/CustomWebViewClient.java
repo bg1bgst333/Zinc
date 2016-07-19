@@ -17,14 +17,14 @@ import android.widget.Toast;
 public class CustomWebViewClient extends WebViewClient{
 
     // メンバフィールドの定義.
-    public MainActivity activity = null;    // Activityインスタンスactivityをnullにセット.
+    public WebViewTabFragment fragment = null;    // Activityインスタンスactivityをnullにセット.
 
     // リンクURLクリックやリダイレクトなどでロードURLが上書きされた時.
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url){
         // リンクをクリックした時に, リンク先のURLをEditTextに反映.
-        if (activity != null) {  // activityがあれば.
-            EditText urlBar = (EditText) activity.findViewById(R.id.urlbar);   // urlBarを取得.
+        if (fragment != null) {  // activityがあれば.
+            EditText urlBar = (EditText) fragment.fragmentView.findViewById(R.id.urlbar);   // urlBarを取得.
             String show = null; // 表示するURLのshowをnullにセット.
             if (url.startsWith("http://")) {    // "http://"の場合.
                 show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
@@ -51,8 +51,8 @@ public class CustomWebViewClient extends WebViewClient{
         super.onPageStarted(view, url, favicon);
 
         // progressBarがあれば表示.
-       if (activity.progressBar != null){   // activity.progressBarがnull.
-           activity.progressBar.setVisibility(View.VISIBLE);  // setVisibilityでVISIBLEにする.
+       if (fragment.progressBar != null){   // fragment.progressBarがnull.
+           fragment.progressBar.setVisibility(View.VISIBLE);  // setVisibilityでVISIBLEにする.
        }
     }
 
@@ -61,9 +61,12 @@ public class CustomWebViewClient extends WebViewClient{
     public void onPageFinished (WebView view, String url){
         super.onPageFinished(view, url);
 
+        // MainActivityを使えるようにしておく.
+        MainActivity activity = (MainActivity) fragment.getActivity();  // getActivityでMainActivityを取得.
+
         // progressBarがあれば非表示.
-        if (activity.progressBar != null){   // activity.progressBarがnull.
-            activity.progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
+        if (fragment.progressBar != null){   // fragment.progressBarがnull.
+            fragment.progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
         }
 
         // タイトルの取得..
@@ -72,7 +75,7 @@ public class CustomWebViewClient extends WebViewClient{
         long id = -1;   // insertの戻り値を格納するidに-1をセット.
         try{
             if (activity.sqlite == null) {   // activity.sqliteがnullなら.
-                activity.sqlite = activity.hlpr.getWritableDatabase();    // hactivity.hlpr.getWritableDatabase()でDBの書き込みが可能に.
+                activity.sqlite = activity.hlpr.getWritableDatabase();    // activity.hlpr.getWritableDatabase()でDBの書き込みが可能に.
             }
             ContentValues values = new ContentValues(); // テーブルに挿入する値の箱ContentValuesを用意.
             values.put("name", name);    // "name"をキーにnameをput.

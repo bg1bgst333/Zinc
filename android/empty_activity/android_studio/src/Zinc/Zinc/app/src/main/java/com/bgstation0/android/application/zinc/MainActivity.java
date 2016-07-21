@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public DownloadManager downloadManager = null;  // DownloadManager型downloadManagerにnullをセット.
     public Uri downloadUri = null;
     public String downloadFilename = null;
-    public StringBuffer tabTagName = null; // StringBuffer型tabTagNameにnullをセット.
     public int tabNo = 1;   // int型tabNoに1をセット.
+    public FragmentTabHost tabHost = null;  // FragmentTabHost型tabHostにnullをセット.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +62,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // FragmentManagerの取得.
         FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでFragmentManagerを取得.(support.v4の場合.)
         // tabHostの取得.
-        FragmentTabHost tabHost = (FragmentTabHost)findViewById(R.id.tabhost);  // tabHostを取得.
+        tabHost = (FragmentTabHost)findViewById(R.id.tabhost);  // tabHostを取得.
         // tabHostの準備.
         tabHost.setup(this, fragmentManager, R.id.content); // tabHost.setupで準備.
         // タブタグネームのセット.
-        tabTagName = new StringBuffer("tab" + tabNo); // tabTagNameは"tab + tabNoとする.
+        String tabTagName = "tab" + tabNo; // tabTagNameは"tab" + tabNoとする.
         // タブスペックの作成.
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabTagName.toString());    // tabHost.newTabSpecでtabSpecを作成.
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabTagName);    // tabHost.newTabSpecでtabSpecを作成.
         // タブの表示名のセット.
         tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
         // タブの追加.
         tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+        // tabNoを増やす.
+        tabNo++;    // tabNoを1つ増やす.
 
     }
 
@@ -183,6 +185,19 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             downloadReceiver.activity = this;   // downloadReceiver.activityにthis(MainActivity自身)をセット.
             registerReceiver(downloadReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)); // registerReceiverでレシーバーにダウンロード完了時のインテントフィルタを登録.
             long downloadId = downloadManager.enqueue(request); // downloadManager.enqueueでrequestを登録.
+        } else if (id == R.id.action_newtab_add) {   // "新しいタブ"
+
+            // タブタグネームのセット.
+            String tabTagName = "tab" + tabNo; // tabTagNameは"tab" + tabNoとする.
+            // タブスペックの作成.
+            TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabTagName);    // tabHost.newTabSpecでtabSpecを作成.
+            // タブの表示名のセット.
+            tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
+            // タブの追加.
+            tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+            // tabNoを増やす.
+            tabNo++;    // tabNoを1つ増やす.
+
         }
         return super.onOptionsItemSelected(item);
     }

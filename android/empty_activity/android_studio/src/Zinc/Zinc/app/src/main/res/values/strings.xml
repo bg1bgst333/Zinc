@@ -5,6 +5,7 @@
     <string name="action_bookmark_manager_text">ブックマークの管理</string>
     <string name="action_history_text">履歴</string>
     <string name="action_download_text">ダウンロード</string>
+    <string name="action_newtab_add_text">新しいタブ</string>
     <string name="activity_bookmark_title_text">ブックマーク</string>
     <string name="activity_history_title_text">履歴</string>
     <string name="bookmark_status_text">ブックマークはありません</string>

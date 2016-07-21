@@ -26,6 +26,7 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
     // メンバフィールドの定義.
     View fragmentView = null;   // fragmentのView.
     public ProgressBar progressBar = null;  // ProgressBar型progressBarにnullをセット.
+    public Bundle mInstanceState = null;   // メンバとしてsavedInstanceStateを保持しておくmInstanceState.
 
     public WebViewTabFragment() {
         // Required empty public constructor
@@ -39,6 +40,7 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_web_view_tab, container, false);
 
@@ -56,6 +58,11 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
         customwc.fragment = this;   // customwc.fragmentにthis(MainActivity自身)をセット.
         webView.setWebChromeClient(customwc);    // webView.setWebChromeClientでCustomWebChromeClientのインスタンスcustomwcをセット.
 
+        // mInstanceStateがあれば, それを使って復元.
+        if (mInstanceState != null){   // mInstanceStateがnullでなければ.
+            webView.restoreState(mInstanceState);   // webView.restoreStateでmInstanceStateから復元.
+        }
+
         // button1を取得し, OnClickListenerとして自身をセット.
         Button button1 = (Button)fragmentView.findViewById(R.id.button1);    // R.id.button1を取得.
         button1.setOnClickListener(this);    // button1.setOnClickListenerでthis(自身)をセット.
@@ -69,6 +76,16 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
         progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
 
         return fragmentView;
+    }
+
+    // 配下のビューが破棄された時.
+    @Override
+    public void onDestroyView() {
+        // webViewの状態を保存.
+        WebView webView = (WebView)fragmentView.findViewById(R.id.webview);  // webViewを取得.
+        mInstanceState = new Bundle();  // Bundleオブジェクトを生成.
+        webView.saveState(mInstanceState); // webView.saveStateでmInstanceStateに保存.
+        super.onDestroyView();
     }
 
     // View.OnClickListenerインタフェースのオーバーライドメソッドを実装.

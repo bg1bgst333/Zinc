@@ -12,7 +12,7 @@
         jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="24.0.0"
-        sha1="f28baa07bd9ced0b0959067c5828d7c0824931d5">
+        sha1="e8104fee98058edda98d8ab3f2e3eafcfa5ab815">
         <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\instant-run_a9274026224a871b942825aba246f05dca0ffef0.jar" />
     </item>
     <item
@@ -47,7 +47,7 @@
         jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="24.0.0"
-        sha1="94f282bb4d92720a370fbf9736fe34b3328d1b1b">
+        sha1="94865bfa7bcbf4332cafdaffcf034118056367eb">
         <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_7f89a0794ec984f94eaa345d13c64523b9864d52.jar" />
     </item>
     <item

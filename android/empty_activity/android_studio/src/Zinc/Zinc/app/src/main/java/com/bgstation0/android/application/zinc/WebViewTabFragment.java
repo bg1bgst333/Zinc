@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.net.URLEncoder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -136,24 +139,51 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
             EditText urlBar = (EditText) fragmentView.findViewById(R.id.urlbar);    // findViewByIdでurlBarを取得.
             String url = urlBar.getText().toString();    // urlBar.getText().toString()でurlを取得.
 
-            // WebViewオブジェクトwebViewでurlのサイトを表示.
-            WebView webView = (WebView) fragmentView.findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
-            String load = null; // ロードするURLのloadをnullにセット.
-            String show = null; // 表示するURlのshowをurlにセット.
-            if (url.startsWith("https://")) {    // "https://"の場合.
-                load = url; // loadにurlをそのまま代入.
-                show = url; // showにurlをそのまま代入.
+            // '.'がない, または' 'がある場合は検索文字列とする.
+            if (!url.contains(".") || url.contains(" ")){
+                String encoded = null;
+                // URLエンコードはtryで囲む.
+                try {
+                    // URLエンコード.
+                    encoded = URLEncoder.encode(url, "utf-8");  // URLEncoder.encodeでurlをutf-8に変換.
+                }
+                catch (Exception ex){
+                    encoded = null;
+                }
+                finally {
+                    // ダメならエラーメッセージ.
+                    if (encoded == null){
+                        Toast.makeText(activity, "URLEncode Error!", Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        // よければ検索.
+                        String searchUrl = "https://www.google.co.jp/search?q=" + encoded;  // 実際にはURLエンコードしなくても検索できたが一応encodedを検索クエリに付ける.
+                        WebView webView = (WebView) fragmentView.findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
+                        urlBar.setText(searchUrl);  // urlBar.setTextでURLバーにsearchUrlをセットして表示.
+                        webView.loadUrl(searchUrl); // webView.loadUrlにsearchUrlを渡して検索.
+                    }
+                }
             }
-            else if (url.startsWith("http://")) {    // "http://"の場合.
-                load = url; // loadにurlをそのまま代入.
-                show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+            else {  // それ以外ならURL.
+
+                // WebViewオブジェクトwebViewでurlのサイトを表示.
+                WebView webView = (WebView) fragmentView.findViewById(R.id.webview);    // findViewByIdでwebViewを取得.
+                String load = null; // ロードするURLのloadをnullにセット.
+                String show = null; // 表示するURlのshowをurlにセット.
+                if (url.startsWith("https://")) {    // "https://"の場合.
+                    load = url; // loadにurlをそのまま代入.
+                    show = url; // showにurlをそのまま代入.
+                } else if (url.startsWith("http://")) {    // "http://"の場合.
+                    load = url; // loadにurlをそのまま代入.
+                    show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+                } else {   // それ以外.
+                    load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
+                    show = url; // showにurlをそのまま代入.
+                }
+                urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
+                webView.loadUrl(load);    // webView.loadUrlでloadのサイトを表示.
+
             }
-            else {   // それ以外.
-                load = "http://" + url; // urlの頭に"http"を付けてloadに代入.
-                show = url; // showにurlをそのまま代入.
-            }
-            urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
-            webView.loadUrl(load);    // webView.loadUrlでloadのサイトを表示.
 
             // trueを返す.
             return true;

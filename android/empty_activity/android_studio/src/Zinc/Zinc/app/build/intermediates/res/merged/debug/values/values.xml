@@ -231,6 +231,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="action_bookmark_add_text">ブックマークの登録</string>
     <string name="action_bookmark_manager_text">ブックマークの管理</string>
+    <string name="action_currenttab_delete_text">このタブを削除</string>
     <string name="action_download_text">ダウンロード</string>
     <string name="action_history_text">履歴</string>
     <string name="action_newtab_add_text">新しいタブ</string>

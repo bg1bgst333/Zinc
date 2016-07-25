@@ -10,8 +10,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +37,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{    // SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListenerを実装.
 
     // メンバフィールドの定義.
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public String downloadFilename = null;
     public int tabNo = 1;   // int型tabNoに1をセット.
     public FragmentTabHost tabHost = null;  // FragmentTabHost型tabHostにnullをセット.
+    public List<TabHost.TabSpec> tabSpecs = null;  // List<TabHost.TabSpec>型tabSpecsにnullをセット.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);  // getSystemServiceでDOWNLOAD_SERVICEを取得.
         }
 
+        // tabSpecsの生成.
+        tabSpecs = new ArrayList<TabHost.TabSpec>();    // new ArrayList<TabHost.TabSpec>でtabSpecsを生成.
         // FragmentManagerの取得.
         FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでFragmentManagerを取得.(support.v4の場合.)
         // tabHostの取得.
@@ -73,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
         // タブの追加.
         tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+        tabSpecs.add(tabSpec);  // tabSpecs.addでtabSpecを追加.
         // tabNoを増やす.
         tabNo++;    // tabNoを1つ増やす.
 
@@ -195,8 +204,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
             // タブの追加.
             tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+            tabSpecs.add(tabSpec);  // tabSpecs.addでtabSpecを追加.
             // tabNoを増やす.
             tabNo++;    // tabNoを1つ増やす.
+
+        } else if (id == R.id.action_currenttab_delete) {   // "このタブを削除"
+
+            // タブが1個の場合.
+            if (tabHost.getTabWidget().getChildCount() <= 1){  // tabHost.getTabWidget().getChildCount()が1以下.
+                finish();   // 終了.
+            }
+            else {   // 2個以上.
+                // 現在のタブのみ削除.
+                int index = tabHost.getCurrentTab();    // tabHost.getCurrentTabで現在のタブのindexを取得.
+                tabSpecs.remove(index);  // tabSpecs.removeでindexを削除.
+                // いったん全タブの削除.
+                tabHost.clearAllTabs();    // tabHost.clearAllTabsでいったん全てのタブを削除.(いろいろ調べたが今のところこういう方法しかできない模様.)
+                FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでfragmentManager取得.
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();   // fragmentManager.beginTransactionでfragmentTransactionを取得.
+                List<Fragment> fl = fragmentManager.getFragments(); // fragmentManager.getFragmentsでフラグメントリストflを取得.
+                for (Fragment f : fl) {  // 全てのフラグメントを削除.
+                    fragmentTransaction.remove(f);  // fragmentTransaction.removeでfを削除.
+                }
+                // tabDataListから残りのタブを復元.
+                for (TabHost.TabSpec tabSpec : tabSpecs) {
+                    // タブの追加.
+                    tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+                }
+            }
 
         }
         return super.onOptionsItemSelected(item);

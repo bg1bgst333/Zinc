@@ -4,22 +4,30 @@
     api-level="18"
     density="xhdpi"
     format="7"
-    timestamp="90096039181602"
+    timestamp="175348890512775"
     token="2234769350861870131" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="621" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="286" />
     <task
         name="verifier"
-        duration="0" />
+        duration="119" />
 
-    <build timestamp="90096039181602" />
+    <artifact
+        location="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\outputs\apk\zinc.apk"
+        type="MAIN" />
+
+    <build timestamp="175348890512775" >
+        <artifact
+            location="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\outputs\apk\zinc.apk"
+            type="MAIN" />
+    </build>
 
 </instant-run>

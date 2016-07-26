@@ -16,4 +16,6 @@
         android:orderInCategory="106" app:showAsAction="never" />
     <item android:id="@+id/action_currenttab_delete" android:title="@string/action_currenttab_delete_text"
         android:orderInCategory="107" app:showAsAction="never" />
+    <item android:id="@+id/action_show_pcsite" android:title="@string/action_show_pcsite_text"
+        android:orderInCategory="108" app:showAsAction="never" />
 </menu>

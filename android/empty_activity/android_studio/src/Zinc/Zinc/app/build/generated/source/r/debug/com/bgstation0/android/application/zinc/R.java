@@ -1795,6 +1795,7 @@ containing a value of this type.
         public static final int action_mode_close_button=0x7f0b0026;
         public static final int action_newtab_add=0x7f0b0078;
         public static final int action_search=0x7f0b0073;
+        public static final int action_show_pcsite=0x7f0b007a;
         public static final int activity_chooser_view_content=0x7f0b0027;
         public static final int add=0x7f0b0013;
         public static final int alertTitle=0x7f0b0033;
@@ -1993,15 +1994,16 @@ containing a value of this type.
         public static final int action_history_text=0x7f060024;
         public static final int action_newtab_add_text=0x7f060025;
         public static final int action_search_text=0x7f060026;
-        public static final int activity_bookmark_title_text=0x7f060027;
-        public static final int activity_history_title_text=0x7f060028;
-        public static final int app_name=0x7f060029;
-        public static final int bookmark_status_text=0x7f06002a;
-        public static final int button1_text=0x7f06002b;
-        public static final int hello_blank_fragment=0x7f06002c;
-        public static final int history_status_text=0x7f06002d;
-        public static final int label_text_name_text=0x7f06002e;
-        public static final int label_text_url_text=0x7f06002f;
+        public static final int action_show_pcsite_text=0x7f060027;
+        public static final int activity_bookmark_title_text=0x7f060028;
+        public static final int activity_history_title_text=0x7f060029;
+        public static final int app_name=0x7f06002a;
+        public static final int bookmark_status_text=0x7f06002b;
+        public static final int button1_text=0x7f06002c;
+        public static final int hello_blank_fragment=0x7f06002d;
+        public static final int history_status_text=0x7f06002e;
+        public static final int label_text_name_text=0x7f06002f;
+        public static final int label_text_url_text=0x7f060030;
         public static final int status_bar_notification_info_overflow=0x7f060013;
     }
     public static final class style {

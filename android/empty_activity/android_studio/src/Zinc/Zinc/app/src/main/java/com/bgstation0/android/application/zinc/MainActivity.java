@@ -32,8 +32,10 @@ import android.webkit.WebBackForwardList;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // タブの表示名のセット.
         tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
         // タブの追加.
-        tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+        Bundle args = new Bundle(); // argsを生成.
+        args.putString("tag", tabTagName);  // tabTagNameをセット.
+        tabHost.addTab(tabSpec, WebViewTabFragment.class, args);    // tabHost.addTabでタブを追加.
         tabSpecs.add(tabSpec);  // tabSpecs.addでtabSpecを追加.
         // tabNoを増やす.
         tabNo++;    // tabNoを1つ増やす.
@@ -99,6 +103,26 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         SearchView searchView = (SearchView)searchItem.getActionView(); // searchItem.getActionViewでsearchViewを取得.
         searchView.setOnQueryTextListener(this);    // searchView.setOnQueryTextListenerでthis(自分自身)を渡す.
         return true;    // trueを返す.
+    }
+
+    // メニュー準備時
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // 現在のフラグメントを取得.
+        FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでfragmentManager取得.
+        int index = tabHost.getCurrentTab();    // tabHost.getCurrentTabで現在のタブのインデックスを取得.
+        String tag = tabSpecs.get(index).getTag();  // tabSpecs.get(index).getTagでtabSpecsからtagを取得.
+        WebViewTabFragment wf = (WebViewTabFragment)fragmentManager.findFragmentByTag(tag); // fragmentManager.findFragmentByTagでtagからwfを取得.
+        if (!wf.isPC) { // PCでない.
+            MenuItem mitem = (MenuItem)menu.findItem(R.id.action_show_pcsite);  // R.id.action_show_pcsiteなるMenuItemのmitem取得.
+            mitem.setTitle("PCサイトの表示"); //  mitem.setTitleで"PCサイトの表示".
+        }
+        else{   // PC
+            MenuItem mitem = (MenuItem)menu.findItem(R.id.action_show_pcsite);  // R.id.action_show_pcsiteなるMenuItemのmitem取得.
+            mitem.setTitle("モバイルサイトの表示");   //  mitem.setTitleで"モバイルサイトの表示".
+        }
+        return true;
     }
 
     // メニュー選択時
@@ -203,7 +227,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             // タブの表示名のセット.
             tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
             // タブの追加.
-            tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
+            Bundle args = new Bundle(); // argsを生成.
+            args.putString("tag", tabTagName);  // tabTagNameをセット.
+            tabHost.addTab(tabSpec, WebViewTabFragment.class, args);    // tabHost.addTabでタブを追加.
             tabSpecs.add(tabSpec);  // tabSpecs.addでtabSpecを追加.
             // tabNoを増やす.
             tabNo++;    // tabNoを1つ増やす.
@@ -220,19 +246,34 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 tabSpecs.remove(index);  // tabSpecs.removeでindexを削除.
                 // いったん全タブの削除.
                 tabHost.clearAllTabs();    // tabHost.clearAllTabsでいったん全てのタブを削除.(いろいろ調べたが今のところこういう方法しかできない模様.)
+                // これはいらなかった.
+                /*
                 FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでfragmentManager取得.
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();   // fragmentManager.beginTransactionでfragmentTransactionを取得.
                 List<Fragment> fl = fragmentManager.getFragments(); // fragmentManager.getFragmentsでフラグメントリストflを取得.
                 for (Fragment f : fl) {  // 全てのフラグメントを削除.
                     fragmentTransaction.remove(f);  // fragmentTransaction.removeでfを削除.
                 }
+                fragmentTransaction.commit();
+                */
                 // tabDataListから残りのタブを復元.
                 for (TabHost.TabSpec tabSpec : tabSpecs) {
                     // タブの追加.
                     tabHost.addTab(tabSpec, WebViewTabFragment.class, null);    // tabHost.addTabでタブを追加.
                 }
             }
-
+        } else if (id == R.id.action_show_pcsite){  // "PCサイトの表示"
+            // 現在のフラグメントを取得.
+            FragmentManager fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでfragmentManager取得.
+            int index = tabHost.getCurrentTab();    // tabHost.getCurrentTabで現在のタブのインデックスを取得.
+            String tag = tabSpecs.get(index).getTag();  // tabSpecs.get(index).getTagでtabSpecsからtagを取得.
+            WebViewTabFragment wf = (WebViewTabFragment)fragmentManager.findFragmentByTag(tag); // fragmentManager.findFragmentByTagでtagからwfを取得.
+            if (!wf.isPC) { // PCでない.
+                wf.reloadPCSite();    // PCサイトでリロード.
+            }
+            else{
+                wf.reloadPhone();   // モバイルサイトでリロード.
+            }
         }
         return super.onOptionsItemSelected(item);
     }

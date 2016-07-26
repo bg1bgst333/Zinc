@@ -30,13 +30,17 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
     View fragmentView = null;   // fragmentのView.
     public ProgressBar progressBar = null;  // ProgressBar型progressBarにnullをセット.
     public Bundle mInstanceState = null;   // メンバとしてsavedInstanceStateを保持しておくmInstanceState.
+    public boolean isPC = false;    // boolean型isPCにfalseをセット.
+    public String phoneUA = null; // String型phoneUAにnullをセット.
+    public String pcUA = null;  // String型pcUAにnullをセット.
+    public String tag = null;   // String型tagにnullをセット.
 
     public WebViewTabFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
     }
 
@@ -47,11 +51,28 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_web_view_tab, container, false);
 
+        // タグのセット.
+        if (tag == null) {  // tagが無かったら.
+            Bundle bundle = getArguments(); // getArgumentsでbundleを取得.(savedInstanceStateでは渡されてこないので注意.)
+            tag = bundle.getString("tag");  // tagを取得.
+            fragmentView.setTag(tag);   // fragmentView.setTagでセット.
+        }
+
         // MainActivityを使えるようにしておく.
         MainActivity activity = (MainActivity)getActivity();  // getActivityでMainActivityを取得.
 
         // webViewの初期化.
         WebView webView = (WebView)fragmentView.findViewById(R.id.webview);  // webViewを取得.
+
+        // UserAgentの取得と設定.
+        if (!isPC) { // モバイル.
+            phoneUA = webView.getSettings().getUserAgentString();   // webView.getSettings().getUserAgentStringでphoneUA取得.
+            pcUA = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.116 Safari/537.36"; // pcUAはこれ.
+            webView.getSettings().setUserAgentString(phoneUA); // webView.getSettings().setUserAgentStringでphoneUAを設定.
+        }
+        else{
+            webView.getSettings().setUserAgentString(pcUA); // webView.getSettings().setUserAgentStringでpcUAを設定.
+        }
 
         // WebViewClientのセット.
         CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
@@ -120,6 +141,23 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
 
         }
 
+    }
+
+    // リロード.
+    public void reloadPCSite(){
+        // リロード.
+        isPC = true;    // isPCをtrueに.
+        WebView webView = (WebView) fragmentView.findViewById(R.id.webview);  // webViewを取得.
+        webView.getSettings().setUserAgentString(pcUA); // webView.getSettings().setUserAgentStringでpcUAを設定.
+        webView.reload();   // リロード.
+    }
+    // Phoneリロード.
+    public void reloadPhone(){
+        // リロード.
+        isPC = false;   // isPCをfalseに.
+        WebView webView = (WebView) fragmentView.findViewById(R.id.webview);  // webViewを取得.
+        webView.getSettings().setUserAgentString(phoneUA);  // webView.getSettings().setUserAgentStringでphoneUAを設定.
+        webView.reload();   // リロード.
     }
 
     // TextView.OnEditorActionListenerインタフェースのオーバーライドメソッドを実装.

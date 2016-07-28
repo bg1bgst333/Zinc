@@ -234,6 +234,7 @@
     <string name="action_currenttab_delete_text">このタブを削除</string>
     <string name="action_download_text">ダウンロード</string>
     <string name="action_history_text">履歴</string>
+    <string name="action_make_shortcut_text">ショートカットの作成</string>
     <string name="action_newtab_add_text">新しいタブ</string>
     <string name="action_search_text">ページ内検索</string>
     <string name="action_show_pcsite_text">PCサイトの表示</string>

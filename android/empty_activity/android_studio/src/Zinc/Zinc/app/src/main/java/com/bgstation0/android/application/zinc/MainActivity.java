@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -84,11 +85,54 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // タブの追加.
         Bundle args = new Bundle(); // argsを生成.
         args.putString("tag", tabTagName);  // tabTagNameをセット.
+        // ショートカットから起動された時.
+        Intent intent = getIntent();    // getIntentでintentを取得.
+        if (intent != null) {
+            String title = intent.getStringExtra(Intent.EXTRA_TEXT);  // intent.getStringExtraでIntent.EXTRA_TEXTを指定してtitleを取得.
+            if (title != null) { // titleがnullでない場合.
+                args.putString("title", title); // args.putStringでtitleをセット.
+                String url = intent.getDataString(); // intent.getDataStringでurlを取得.
+                args.putString("url", url); // args.putStringでurlをセット.
+            }
+        }
         tabHost.addTab(tabSpec, WebViewTabFragment.class, args);    // tabHost.addTabでタブを追加.
         tabSpecs.add(tabSpec);  // tabSpecs.addでtabSpecを追加.
         // tabNoを増やす.
         tabNo++;    // tabNoを1つ増やす.
 
+    }
+
+    // 新しいインテントが発行された時.(アプリは既に起動しているがショートカットが押された場合.)
+    @Override
+    protected void onNewIntent (Intent intent){
+        super.onNewIntent(intent);
+
+        // タブタグネームのセット.
+        String tabTagName = "tab" + tabNo; // tabTagNameは"tab" + tabNoとする.
+        // タブスペックの作成.
+        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tabTagName);    // tabHost.newTabSpecでtabSpecを作成.
+        // タブの表示名のセット.
+        tabSpec.setIndicator("新しいタブ" + tabNo);  // tabSpec.setIndicatorでタブに表示する名前をセット.
+        // タブの追加.
+        Bundle args = new Bundle(); // argsを生成.
+        args.putString("tag", tabTagName);  // tabTagNameをセット.
+        // ショートカットから起動された時.
+        if (intent != null) {   // intentがnullでなければ.
+            String title = intent.getStringExtra(Intent.EXTRA_TEXT);  // intent.getStringExtraでIntent.EXTRA_TEXTを指定してtitleを取得.
+            if (title != null) { // titleがnullでない場合.
+                args.putString("title", title); // args.putStringでtitleをセット.
+                String url = intent.getDataString(); // intent.getDataStringでurlを取得.
+                args.putString("url", url); // args.putStringでurlをセット.
+            }
+        }
+        tabHost.addTab(tabSpec, WebViewTabFragment.class, args);    // tabHost.addTabでタブを追加.
+        // tabNoを増やす.
+        tabNo++;    // tabNoを1つ増やす.
+
+        // 追加したタブを表示.
+        TabWidget tw = tabHost.getTabWidget();  // tabHost.getTabWidgetでtwを取得.
+        int count = tw.getTabCount();   // tw.getTabCount()でタブの数を取得.
+        tabHost.setCurrentTab(count - 1);   // tabHost.setCurrentTabで最後のタブを選択.
     }
 
     // メニュー作成時
@@ -273,6 +317,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
             else{
                 wf.reloadPhone();   // モバイルサイトでリロード.
+            }
+        } else if (id == R.id.action_make_shortcut){    // "ショートカットの作成"
+            // タイトルとURL取得.
+            WebView wv = (WebView)findViewById(R.id.webview);   // wv取得.
+            String title = wv.getTitle();   // タイトル取得.
+            String url = wv.getUrl();   // URL取得.
+            if (url != null) {   // urlがnullでなければ.
+                // URLを表示するインテントを作成.
+                Intent launcherIntent = new Intent(Intent.ACTION_VIEW); // Intent.ACTION_VIEWなlauncherIntentを作成.
+                launcherIntent.addCategory(Intent.CATEGORY_DEFAULT);   // launcherIntent.addCategoryでIntent.CATEGORY_DEFAULTを追加.
+                launcherIntent.setClassName(getPackageName(), getClass().getName());    // launcherIntent.setClassNameでパッケージ名とクラス名をセット.
+                launcherIntent.putExtra(Intent.EXTRA_TEXT, title);  // launcherIntent.putExtraでIntent.EXTRA_TEXTにtitleをセット.
+                launcherIntent.setData(Uri.parse(url)); // launcherIntent.setDataでurlをセット.
+                // ショートカットを作成するインテントを作成.
+                Intent shortcutIntent = new Intent();   // shortcutIntentを作成.
+                shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launcherIntent);  // shortcutIntent.putExtraでIntent.EXTRA_SHORTCUT_INTENTにlauncherIntentを指定.
+                shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, title); // shortcutIntent.putExtraでEXTRA_SHORTCUT_NAMEにtitleをセット.
+                Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);  // ic_launcherからIntent.ShortcutIconResource.fromContextでiconResourceを取得.
+                shortcutIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource); // shortcutIntent.putExtraでIntent.EXTRA_SHORTCUT_ICON_RESOURCEにiconResourceを指定.
+                shortcutIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");   // shortcutIntent.setActionで"com.android.launcher.action.INSTALL_SHORTCUT"をアクションとすることでショートカットが作成される.
+                sendBroadcast(shortcutIntent);  // sendBroadcastでshortcutIntentを送信.
             }
         }
         return super.onOptionsItemSelected(item);

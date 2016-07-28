@@ -1788,6 +1788,7 @@ containing a value of this type.
         public static final int action_divider=0x7f0b0063;
         public static final int action_download=0x7f0b0077;
         public static final int action_history=0x7f0b0076;
+        public static final int action_make_shortcut=0x7f0b007b;
         public static final int action_menu_divider=0x7f0b0002;
         public static final int action_menu_presenter=0x7f0b0003;
         public static final int action_mode_bar=0x7f0b0042;
@@ -1992,18 +1993,19 @@ containing a value of this type.
         public static final int action_currenttab_delete_text=0x7f060022;
         public static final int action_download_text=0x7f060023;
         public static final int action_history_text=0x7f060024;
-        public static final int action_newtab_add_text=0x7f060025;
-        public static final int action_search_text=0x7f060026;
-        public static final int action_show_pcsite_text=0x7f060027;
-        public static final int activity_bookmark_title_text=0x7f060028;
-        public static final int activity_history_title_text=0x7f060029;
-        public static final int app_name=0x7f06002a;
-        public static final int bookmark_status_text=0x7f06002b;
-        public static final int button1_text=0x7f06002c;
-        public static final int hello_blank_fragment=0x7f06002d;
-        public static final int history_status_text=0x7f06002e;
-        public static final int label_text_name_text=0x7f06002f;
-        public static final int label_text_url_text=0x7f060030;
+        public static final int action_make_shortcut_text=0x7f060025;
+        public static final int action_newtab_add_text=0x7f060026;
+        public static final int action_search_text=0x7f060027;
+        public static final int action_show_pcsite_text=0x7f060028;
+        public static final int activity_bookmark_title_text=0x7f060029;
+        public static final int activity_history_title_text=0x7f06002a;
+        public static final int app_name=0x7f06002b;
+        public static final int bookmark_status_text=0x7f06002c;
+        public static final int button1_text=0x7f06002d;
+        public static final int hello_blank_fragment=0x7f06002e;
+        public static final int history_status_text=0x7f06002f;
+        public static final int label_text_name_text=0x7f060030;
+        public static final int label_text_url_text=0x7f060031;
         public static final int status_bar_notification_info_overflow=0x7f060013;
     }
     public static final class style {

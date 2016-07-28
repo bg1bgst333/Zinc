@@ -48,6 +48,9 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // ショートカットから渡されたURL.
+        String url = null; // String型urlをnullにセット.
+
         // Inflate the layout for this fragment
         fragmentView = inflater.inflate(R.layout.fragment_web_view_tab, container, false);
 
@@ -56,6 +59,7 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
             Bundle bundle = getArguments(); // getArgumentsでbundleを取得.(savedInstanceStateでは渡されてこないので注意.)
             tag = bundle.getString("tag");  // tagを取得.
             fragmentView.setTag(tag);   // fragmentView.setTagでセット.
+            url = bundle.getString("url");  // urlを取得.
         }
 
         // MainActivityを使えるようにしておく.
@@ -98,6 +102,20 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
         // progressBarは最初は隠しておく.
         progressBar = (ProgressBar)fragmentView.findViewById(R.id.progressBar);  // progressBarを取得.
         progressBar.setVisibility(View.INVISIBLE);  // setVisibilityでINVISIBLEにする.
+
+        // urlがあれば初期表示.
+        if (url != null) {
+            String show = null; // 表示するURlのshowにnullをセット.
+            if (url.startsWith("https://")) {    // "https://"の場合.
+                show = url; // showにurlをそのまま代入.
+            } else if (url.startsWith("http://")) {    // "http://"の場合.
+                show = url.substring(7);    // showにurlの7文字目から始まる文字列を代入.
+            } else {   // それ以外.
+                show = url; // showにurlをそのまま代入.
+            }
+            urlBar.setText(show);   // urlBar.setTextでURLバーにshowをセットして表示.
+            webView.loadUrl(url);   // webView.loadUrlでurlをロード.
+        }
 
         return fragmentView;
     }

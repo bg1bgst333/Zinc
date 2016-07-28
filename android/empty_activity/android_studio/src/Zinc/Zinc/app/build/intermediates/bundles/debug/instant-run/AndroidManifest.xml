@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bgstation0.android.application.zinc"
-    android:versionCode="23"
-    android:versionName="0.0.0.0 #23 (Develop/Minami-Urawa)" >
+    android:versionCode="24"
+    android:versionName="0.0.0.0 #24 (Develop/Minami-Urawa)" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
     <application
         android:name="com.android.tools.fd.runtime.BootstrapApplication"
@@ -26,6 +27,14 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
             </intent-filter>
         </activity>
         <activity

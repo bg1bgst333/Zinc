@@ -78,6 +78,9 @@ public class WebViewTabFragment extends Fragment implements View.OnClickListener
             webView.getSettings().setUserAgentString(pcUA); // webView.getSettings().setUserAgentStringでpcUAを設定.
         }
 
+        // JavaScriptの有効化.
+        webView.getSettings().setJavaScriptEnabled(true);   // webView.getSettings().setJavaScriptEnabledでtrueにすることでJavaScriptを有効にする.
+
         // WebViewClientのセット.
         CustomWebViewClient customwv = new CustomWebViewClient();    // CustomWebViewClientのインスタンス生成.
         customwv.fragment = this;   // customwv.fragmentにthis(WebViewTabFragment自身)をセット.

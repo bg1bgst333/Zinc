@@ -92,4 +92,17 @@ public class CustomWebViewClient extends WebViewClient{
 
         Toast.makeText(activity, name, Toast.LENGTH_LONG).show();    // 読み込んだページのタイトルを表示.
     }
+
+    // リソースがロードされた時.
+    @Override
+    public void onLoadResource(WebView view, String url){
+
+        // MainActivityを使えるようにしておく.
+        MainActivity activity = (MainActivity) fragment.getActivity();  // getActivityでMainActivityを取得.
+
+        // urlを表示.
+        Toast.makeText(activity, url, Toast.LENGTH_LONG).show();    // Toast.makeTextでurlを表示するトーストを生成し, showで表示.
+
+        super.onLoadResource(view, url);
+    }
 }

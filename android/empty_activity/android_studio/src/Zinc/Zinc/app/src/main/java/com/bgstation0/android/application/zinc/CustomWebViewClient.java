@@ -95,13 +95,16 @@ public class CustomWebViewClient extends WebViewClient{
 
     // リソースがロードされた時.
     @Override
-    public void onLoadResource(WebView view, String url){
+    public void onLoadResource(WebView view, String url) {
 
         // MainActivityを使えるようにしておく.
         MainActivity activity = (MainActivity) fragment.getActivity();  // getActivityでMainActivityを取得.
 
-        // urlを表示.
-        Toast.makeText(activity, url, Toast.LENGTH_LONG).show();    // Toast.makeTextでurlを表示するトーストを生成し, showで表示.
+        // 簡易的なWebフィルタリング.
+        // 例えば画像ファイルが含まれていればロードを停止.
+        if (url.contains(".jpg") || url.contains(".jpeg") || url.contains(".png") || url.contains(".gif")){   // url.containsで".jpg"または".jpeg"または".png"または".gif"が含まれていれば.
+            view.stopLoading(); // view.stopLoadingでロードを停止.
+        }
 
         super.onLoadResource(view, url);
     }

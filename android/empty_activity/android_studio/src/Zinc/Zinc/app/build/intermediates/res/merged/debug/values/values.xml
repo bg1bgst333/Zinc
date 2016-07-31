@@ -238,6 +238,7 @@
     <string name="action_newtab_add_text">新しいタブ</string>
     <string name="action_search_text">ページ内検索</string>
     <string name="action_show_pcsite_text">PCサイトの表示</string>
+    <string name="action_show_source_text">ソースの表示</string>
     <string name="activity_bookmark_title_text">ブックマーク</string>
     <string name="activity_history_title_text">履歴</string>
     <string name="app_name">Zinc</string>

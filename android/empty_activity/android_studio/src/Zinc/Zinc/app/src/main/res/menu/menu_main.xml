@@ -20,4 +20,6 @@
         android:orderInCategory="108" app:showAsAction="never" />
     <item android:id="@+id/action_make_shortcut" android:title="@string/action_make_shortcut_text"
         android:orderInCategory="109" app:showAsAction="never" />
+    <item android:id="@+id/action_show_source" android:title="@string/action_show_source_text"
+        android:orderInCategory="110" app:showAsAction="never" />
 </menu>

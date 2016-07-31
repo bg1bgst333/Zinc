@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -15,6 +16,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +46,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener{    // SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListenerを実装.
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, LoaderManager.LoaderCallbacks<String>{    // SearchView.OnQueryTextListener, MenuItemCompat.OnActionExpandListener, LoaderManager.LoaderCallbacks<String>を実装.
 
     // メンバフィールドの定義.
     public DBHelper hlpr = null;    // DBHelper型hlprにnullをセット.
@@ -339,8 +342,46 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 shortcutIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");   // shortcutIntent.setActionで"com.android.launcher.action.INSTALL_SHORTCUT"をアクションとすることでショートカットが作成される.
                 sendBroadcast(shortcutIntent);  // sendBroadcastでshortcutIntentを送信.
             }
+        } else if (id == R.id.action_show_source){  // ソースの表示.
+            // タイトルとURL取得.
+            WebView wv = (WebView)findViewById(R.id.webview);   // wv取得.
+            String title = wv.getTitle();   // タイトル取得.
+            String url = wv.getUrl();   // URL取得.
+            if (url != null) {   // urlがnullでなければ.
+                // argsの準備.
+                Bundle args = new Bundle(); // argsを生成.
+                args.putString("url", url);  // urlをセット.
+                // HTTPリクエスト(非同期処理)の開始.
+                getSupportLoaderManager().initLoader(0, args, this);    // getSupportLoaderManager().initLoaderでローダー初期化.
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // ローダーが作られた時.
+    @Override
+    public Loader<String> onCreateLoader(int id, Bundle args){
+        // Loaderの生成.
+        if (args != null) {  // argsがnullでなければ.
+            String url = args.getString("url"); // args.getStringでurlを取得.
+            return new HttpRequestAsyncTaskLoader(this, url);   // HttpRequestAsyncTaskLoaderを生成して, インスタンスを返す.
+        }
+        else{
+            return null;    // nullを返す.
+        }
+    }
+
+    // ロードが終了した時.
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data){
+        // とりあえずトーストで表示.
+        Toast.makeText(this, data, Toast.LENGTH_LONG).show();  // Toastでdataを表示.
+    }
+
+    // ローダーがリセットされた時.
+    @Override
+    public void onLoaderReset(Loader<String> loader){
+
     }
 
     // アクティビティの結果が返ってきたとき.

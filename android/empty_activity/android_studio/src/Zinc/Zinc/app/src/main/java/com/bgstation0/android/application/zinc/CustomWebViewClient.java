@@ -102,9 +102,11 @@ public class CustomWebViewClient extends WebViewClient{
 
         // 簡易的なWebフィルタリング.
         // 例えば画像ファイルが含まれていればロードを停止.
+        /* とりあえず使わないのでコメントアウト.
         if (url.contains(".jpg") || url.contains(".jpeg") || url.contains(".png") || url.contains(".gif")){   // url.containsで".jpg"または".jpeg"または".png"または".gif"が含まれていれば.
             view.stopLoading(); // view.stopLoadingでロードを停止.
         }
+        */
 
         super.onLoadResource(view, url);
     }

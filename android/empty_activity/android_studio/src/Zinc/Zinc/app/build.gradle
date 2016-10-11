@@ -10,8 +10,8 @@ android {
         applicationId "com.bgstation0.android.application.zinc"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 29
-        versionName "0.0.0.0 #29 (Develop/Minami-Urawa)"
+        versionCode 30
+        versionName "0.0.0.0 #30 (Develop/Minami-Urawa)"
     }
     buildTypes {
         release {
@@ -30,7 +30,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:support-v4:24.0.0'
+    testCompile 'junit:junit:4.12'
 }

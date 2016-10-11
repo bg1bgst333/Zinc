@@ -1800,6 +1800,7 @@ containing a value of this type.
         public static final int checkbox=0x7f0b003c;
         public static final int chronometer=0x7f0b005d;
         public static final int collapseActionView=0x7f0b001e;
+        public static final int content=0x7f0b0055;
         public static final int contentPanel=0x7f0b0034;
         public static final int custom=0x7f0b003a;
         public static final int customPanel=0x7f0b0039;
@@ -1862,7 +1863,6 @@ containing a value of this type.
         public static final int text=0x7f0b0060;
         public static final int text2=0x7f0b005e;
         public static final int textSpacerNoButtons=0x7f0b0037;
-        public static final int textview1=0x7f0b0055;
         public static final int time=0x7f0b005c;
         public static final int title=0x7f0b002d;
         public static final int title_template=0x7f0b0032;
@@ -1907,18 +1907,19 @@ containing a value of this type.
         public static final int abc_search_view=0x7f040018;
         public static final int abc_select_dialog_material=0x7f040019;
         public static final int activity_main=0x7f04001a;
-        public static final int notification_media_action=0x7f04001b;
-        public static final int notification_media_cancel_action=0x7f04001c;
-        public static final int notification_template_big_media=0x7f04001d;
-        public static final int notification_template_big_media_narrow=0x7f04001e;
-        public static final int notification_template_lines=0x7f04001f;
-        public static final int notification_template_media=0x7f040020;
-        public static final int notification_template_part_chronometer=0x7f040021;
-        public static final int notification_template_part_time=0x7f040022;
-        public static final int select_dialog_item_material=0x7f040023;
-        public static final int select_dialog_multichoice_material=0x7f040024;
-        public static final int select_dialog_singlechoice_material=0x7f040025;
-        public static final int support_simple_spinner_dropdown_item=0x7f040026;
+        public static final int fragment_web=0x7f04001b;
+        public static final int notification_media_action=0x7f04001c;
+        public static final int notification_media_cancel_action=0x7f04001d;
+        public static final int notification_template_big_media=0x7f04001e;
+        public static final int notification_template_big_media_narrow=0x7f04001f;
+        public static final int notification_template_lines=0x7f040020;
+        public static final int notification_template_media=0x7f040021;
+        public static final int notification_template_part_chronometer=0x7f040022;
+        public static final int notification_template_part_time=0x7f040023;
+        public static final int select_dialog_item_material=0x7f040024;
+        public static final int select_dialog_multichoice_material=0x7f040025;
+        public static final int select_dialog_singlechoice_material=0x7f040026;
+        public static final int support_simple_spinner_dropdown_item=0x7f040027;
     }
     public static final class menu {
         public static final int menu_main=0x7f0d0000;
@@ -1959,6 +1960,7 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f060011;
         public static final int abc_toolbar_collapse_description=0x7f060012;
         public static final int app_name=0x7f060020;
+        public static final int hello_blank_fragment=0x7f060021;
         public static final int status_bar_notification_info_overflow=0x7f060013;
     }
     public static final class style {

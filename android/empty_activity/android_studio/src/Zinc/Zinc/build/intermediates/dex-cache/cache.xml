@@ -2,60 +2,76 @@
 <items version="2" >
 
     <item
+        is-multidex="true"
         jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.0.0\jars\classes.jar"
         jumboMode="true"
+        optimize="true"
         revision="24.0.0"
         sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.0.0_d1cbcc94a460659d6c7b2ced6e2923ef4a5093d0.jar" />
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.0.0_d1cbcc94a460659d6c7b2ced6e2923ef4a5093d0\classes.dex" />
     </item>
     <item
-        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="a1adab5f8d0ea1167028bab18ab94f9bf8523e0f">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\instant-run_a9274026224a871b942825aba246f05dca0ffef0.jar" />
-    </item>
-    <item
-        jar="C:\Users\bg1\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.0.0\support-annotations-24.0.0.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\support-annotations-24.0.0_64b1c02a17b489dfae19a2d3b1a57a1bdae236d9.jar" />
-    </item>
-    <item
-        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.0.0\jars\classes.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.0.0_97fde80eb11177bf851269e96320665390a1e88d.jar" />
-    </item>
-    <item
-        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\libs\internal_impl-24.0.0.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\internal_impl-24.0.0_849715134c1a1a4a16f4d04fc9b6013cbdf92915.jar" />
-    </item>
-    <item
-        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\classes.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.0.0_9b2854dc3d75191901bed6d5ca112ab55e90b282.jar" />
-    </item>
-    <item
-        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        revision="24.0.0"
-        sha1="741b341d19ca642a64531f318c34c8b0ec4fd7fb">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_7f89a0794ec984f94eaa345d13c64523b9864d52.jar" />
-    </item>
-    <item
+        is-multidex="true"
         jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.0.0\jars\classes.jar"
         jumboMode="true"
+        optimize="true"
         revision="24.0.0"
         sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
-        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.0.0_fa3054890ef1dcc1e30142956365aa89cfbe6974.jar" />
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.0.0_fa3054890ef1dcc1e30142956365aa89cfbe6974\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="1829f376d594c188f935ffddfd4fe1deebd5c371">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7f89a0794ec984f94eaa345d13c64523b9864d52\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\bg1\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.0.0\support-annotations-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.0.0_64b1c02a17b489dfae19a2d3b1a57a1bdae236d9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.0.0_97fde80eb11177bf851269e96320665390a1e88d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.0.0_9b2854dc3d75191901bed6d5ca112ab55e90b282\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.0.0_849715134c1a1a4a16f4d04fc9b6013cbdf92915\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.0"
+        sha1="27b9e54a95a49640acf6e060f91853428eafc106">
+        <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_a9274026224a871b942825aba246f05dca0ffef0\classes.dex" />
     </item>
 
 </items>

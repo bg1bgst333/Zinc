@@ -10,8 +10,8 @@ android {
         applicationId "com.bgstation0.android.application.zinc"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 30
-        versionName "0.0.0.0 #30 (Develop/Minami-Urawa)"
+        versionCode 31
+        versionName "0.0.0.0 #31 (Develop/Minami-Urawa)"
     }
     buildTypes {
         release {

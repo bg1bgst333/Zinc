@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private String currentFragmentTag = null;   // String型currentFragmentTagをnullにセット.
     private MenuItem menuItemUrlBar = null; // MenuItem型menuItemUrlBarをnullにセット.
     private EditText menuUrlBar = null; // EditText型menuUrlBarをnullにセット.
+
     // アクティビティの生成時.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,5 +78,19 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         // 現在のフラグメントを取得して, そのフラグメントでロードする.
         WebFragment webFragment = (WebFragment)fragmentManager.findFragmentByTag(currentFragmentTag);   // currentFragmentTagでwebFragmentを引く.
         webFragment.loadUrl(url);   // webFragment.loadUrlでurlをロード.
+    }
+
+    // menuUrlBarにURLをセット.
+    public void setMenuUrlBar(String url){
+        menuUrlBar.setText(url);
+    }
+
+    // バックキーが押された時.
+    @Override
+    public void onBackPressed() {
+        WebFragment webFragment = (WebFragment)fragmentManager.findFragmentByTag(currentFragmentTag);   // currentFragmentTagでwebFragmentを引く.
+        if (!webFragment.goBack()){
+           super.onBackPressed();
+        }
     }
 }

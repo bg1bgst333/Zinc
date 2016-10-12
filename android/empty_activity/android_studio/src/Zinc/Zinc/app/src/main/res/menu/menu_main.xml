@@ -2,4 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/menu_item_urlbar" android:title="@string/menu_item_urlbar_text"
+        android:orderInCategory="101" app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_edit" app:actionLayout="@layout/menu_urlbar" />
+
+    <item android:id="@+id/menu_item_show_tabs" android:title="@string/menu_item_show_tabs_text"
+        android:orderInCategory="102" app:showAsAction="always"
+        android:icon="?attr/actionModeCopyDrawable" />
+
+    <item android:id="@+id/menu_item_add_tab" android:title="@string/menu_item_add_tab_text"
+        android:orderInCategory="103" app:showAsAction="never" />
+
 </menu>

@@ -8,6 +8,6 @@ public final class BuildConfig {
   public static final String APPLICATION_ID = "com.bgstation0.android.application.zinc";
   public static final String BUILD_TYPE = "debug";
   public static final String FLAVOR = "";
-  public static final int VERSION_CODE = 31;
-  public static final String VERSION_NAME = "0.0.0.0 #31 (Develop/Minami-Urawa)";
+  public static final int VERSION_CODE = 32;
+  public static final String VERSION_NAME = "0.0.0.0 #32 (Develop/Minami-Urawa)";
 }

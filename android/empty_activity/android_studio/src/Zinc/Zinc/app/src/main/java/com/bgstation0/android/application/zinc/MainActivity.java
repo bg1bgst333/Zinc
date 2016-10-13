@@ -1,6 +1,7 @@
 package com.bgstation0.android.application.zinc;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,9 @@ import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements TextView.OnEditorActionListener {
 
     // メンバフィールドの定義
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private String currentFragmentTag = null;   // String型currentFragmentTagをnullにセット.
     private MenuItem menuItemUrlBar = null; // MenuItem型menuItemUrlBarをnullにセット.
     private EditText menuUrlBar = null; // EditText型menuUrlBarをnullにセット.
+    private Map<String, Fragment> fragmentMap = null;   // Map<String, Fragment>型fragmentMapをnullにセット.
 
     // アクティビティの生成時.
     @Override
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // fragmentMapの作成.
+        fragmentMap = new HashMap<String, Fragment>();  // HashMap<String, Fragment>オブジェクトを生成し, fragmentMapに格納.
         // 最初のWebフラグメントの追加.
         fragmentManager = getSupportFragmentManager();  // getSupportFragmentManagerでfragmentManagerを取得.
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();   // fragmentManager.beginTransactionでfragmentTransaction取得.
@@ -42,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         //webFragment.setArguments(args); // webFragment.setArgumentsでargsを渡す.
         fragmentTransaction.add(R.id.content, webFragment, fragmentTag);    // fragmentTransaction.addでwebFragmentをfragmentTagを付けてR.id.contentに追加.
         fragmentTransaction.commit();   // fragmentTransaction.commitで確定.
+        fragmentMap.put(fragmentTag, webFragment);  // fragmentMap.putでfragmentTagとwebFragmentの組を追加.
         currentFragmentTag = fragmentTag;   // currentFragmentTagにfragmentTagを格納.
         webFragmentNo++;    // webFragmentNoをインクリメント.
         //loadUrl("http://bg1.hatenablog.com");  // loadUrlで"http://bg1.hatenablog.com"をロード.(これだとfragmentManager.findFragmentByTagでみつからず落ちる.)
@@ -57,6 +65,31 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         menuUrlBar = (EditText)view.findViewById(R.id.urlBar);   // urlBarを取得.
         menuUrlBar.setOnEditorActionListener(this); // menuUrlBar.setOnEditorActionListenerにthisを指定.
         return true;
+    }
+
+    // メニュー選択時
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // 選択されたメニューアイテムごとに振り分ける.
+        int id = item.getItemId();  // item.getItemIdでidを取得.
+        if (id == R.id.menu_item_add_tab) {  // 新しいタブの追加.
+            // 他のフラグメントを非表示にしてから, フラグメントを追加し, 表示.
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();   // fragmentManager.beginTransactionでfragmentTransaction取得.
+            for (Map.Entry<String, Fragment> entry: fragmentMap.entrySet()){    // 追加前のフラグメントマップを列挙.
+                Fragment fragment = entry.getValue();   // fragmentを取得.
+                fragmentTransaction.hide(fragment); // fragmentTransaction.hideでfragmentを非表示.
+            }
+            String fragmentTag = FRAGMENT_TAB_PREFIX_WEB + webFragmentNo;   // fragmentTagはFRAGMENT_TAG_PREFIX_WEBにwebFragmentNoを付けたものとする.
+            WebFragment webFragment = new WebFragment();    // webFragmentの生成.
+            fragmentTransaction.add(R.id.content, webFragment, fragmentTag);    // fragmentTransaction.addでwebFragmentをfragmentTagを付けてR.id.contentに追加.
+            fragmentTransaction.show(webFragment);  // fragmentTransaction.showでwebFragmentを表示.
+            fragmentTransaction.commit();   // fragmentTransaction.commitで確定.
+            fragmentMap.put(fragmentTag, webFragment);  // fragmentMap.putでfragmentTagとwebFragmentの組を追加.
+            currentFragmentTag = fragmentTag;   // currentFragmentTagにfragmentTagを格納.
+            webFragmentNo++;    // webFragmentNoをインクリメント.
+            setMenuUrlBar("");  // setMenuUrlBarでURLバーを空に.
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // エディタアクションハンドラ

@@ -99,4 +99,14 @@ public class WebFragment extends Fragment {
             return false;   // false.終了
         }
     }
+
+    // 現在表示しているWebページのタイトルを取得.
+    public String getTitle(){
+        return webView.getTitle();  // webView.getTitleでタイトルを取得.
+    }
+
+    // 現在表示しているWebページのURLを取得.
+    public String getUrl(){
+        return webView.getUrl();    // webView.getUrlでURLを取得.
+    }
 }

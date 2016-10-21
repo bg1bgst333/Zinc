@@ -1,14 +1,18 @@
 package com.bgstation0.android.application.zinc;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -99,6 +104,10 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             addFragment(webFragment, fragmentTag);  // フラグメントの追加.
             webFragmentNo++;    // webFragmentNoをインクリメント.
             setMenuUrlBar("");  // setMenuUrlBarでURLバーを空に.
+        }
+        else if (id == R.id.menu_item_add_bookmark) {    // ブックマークの追加.
+            // ブックマーク追加ダイアログの表示.
+            showBookmarkAddDialog();    // showBookmarkAddDialogでブックマーク追加ダイアログを表示.
         }
         return super.onOptionsItemSelected(item);
     }
@@ -227,5 +236,37 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
                 Log.d("Zinc:e:", e.toString());
             }
         }
+    }
+
+    // ブックマークの追加ダイアログの表示.
+    public void showBookmarkAddDialog(){
+        // URL編集ダイアログの生成と表示.
+        final Context context = this;   // thisをcontextに格納.
+        LayoutInflater inflater = (LayoutInflater)getSystemService(LAYOUT_INFLATER_SERVICE);    // getSystemServiceでinflaterを取得.
+        View dialogView = inflater.inflate(R.layout.dialog_edit_url, null); // inflater.inflateでdialog_edit_urlをもとにdialogViewを作成.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);    // AlertDialog.Builderオブジェクトbuilderを生成.
+        WebFragment webFragment = (WebFragment)fragmentManager.findFragmentByTag(currentFragmentTag);   // currentFragmentTagでwebFragmentを引く.
+        String title = webFragment.getTitle();  // webFragment.getTitleでタイトルを取得.
+        String url = webFragment.getUrl();  // webFragment.getUrlでURLを取得.
+        EditText editTextTitle = (EditText)dialogView.findViewById(R.id.edit_text_title);   // editTextTitleを取得.
+        EditText editTextUrl = (EditText)dialogView.findViewById(R.id.edit_text_url);   // editTextUrlを取得.
+        editTextTitle.setText(title);   // editTextTitle.setTextでtitleをセット.
+        editTextUrl.setText(url);   // editTextUrl.setTextでurlをセット.
+        builder.setTitle("ブックマークの追加");  // builder.setTitleでタイトル"ブックマークの追加"をセット.
+        builder.setView(dialogView);    // builder.setViewでビューレイアウトはdialogView.
+        builder.setPositiveButton("追加", new DialogInterface.OnClickListener() { // "追加ボタン"の処理.
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // とりあえずトースト表示.
+                Toast.makeText(context, "追加ボタンが押されました!", Toast.LENGTH_LONG).show(); // "追加ボタンが押されました!"とトースト表示.
+            }
+        });
+        builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // 何もしない.
+            }
+        });
+        builder.create().show();    // ダイアログの作成と表示.
     }
 }

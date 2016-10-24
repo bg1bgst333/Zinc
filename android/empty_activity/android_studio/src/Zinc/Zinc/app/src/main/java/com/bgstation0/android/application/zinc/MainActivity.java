@@ -2,6 +2,7 @@ package com.bgstation0.android.application.zinc;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     private MenuItem menuItemUrlBar = null; // MenuItem型menuItemUrlBarをnullにセット.
     private EditText menuUrlBar = null; // EditText型menuUrlBarをnullにセット.
     private Map<String, Fragment> fragmentMap = null;   // Map<String, Fragment>型fragmentMapをnullにセット.
+    private UrlListDBHelper hlpr = null;    // UrlListDBHelper型hlprをnullにセット.
 
     // アクティビティの生成時.
     @Override
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // DBヘルパーの作成.
+        if (hlpr == null){
+            hlpr = new UrlListDBHelper(getApplication());   // UrlListDBHelperオブジェクトhlprを作成.
+        }
         // fragmentMapの作成.
         fragmentMap = new HashMap<String, Fragment>();  // HashMap<String, Fragment>オブジェクトを生成し, fragmentMapに格納.
         // 最初のWebフラグメントの追加.
@@ -246,10 +252,10 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
         View dialogView = inflater.inflate(R.layout.dialog_edit_url, null); // inflater.inflateでdialog_edit_urlをもとにdialogViewを作成.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);    // AlertDialog.Builderオブジェクトbuilderを生成.
         WebFragment webFragment = (WebFragment)fragmentManager.findFragmentByTag(currentFragmentTag);   // currentFragmentTagでwebFragmentを引く.
-        String title = webFragment.getTitle();  // webFragment.getTitleでタイトルを取得.
-        String url = webFragment.getUrl();  // webFragment.getUrlでURLを取得.
-        EditText editTextTitle = (EditText)dialogView.findViewById(R.id.edit_text_title);   // editTextTitleを取得.
-        EditText editTextUrl = (EditText)dialogView.findViewById(R.id.edit_text_url);   // editTextUrlを取得.
+        final String title = webFragment.getTitle();  // webFragment.getTitleでタイトルを取得.
+        final String url = webFragment.getUrl();  // webFragment.getUrlでURLを取得.
+        final EditText editTextTitle = (EditText)dialogView.findViewById(R.id.edit_text_title);   // editTextTitleを取得.
+        final EditText editTextUrl = (EditText)dialogView.findViewById(R.id.edit_text_url);   // editTextUrlを取得.
         editTextTitle.setText(title);   // editTextTitle.setTextでtitleをセット.
         editTextUrl.setText(url);   // editTextUrl.setTextでurlをセット.
         builder.setTitle("ブックマークの追加");  // builder.setTitleでタイトル"ブックマークの追加"をセット.
@@ -258,7 +264,16 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // とりあえずトースト表示.
-                Toast.makeText(context, "追加ボタンが押されました!", Toast.LENGTH_LONG).show(); // "追加ボタンが押されました!"とトースト表示.
+                //Toast.makeText(context, "追加ボタンが押されました!", Toast.LENGTH_LONG).show(); // "追加ボタンが押されました!"とトースト表示.
+                String fixedTitle = editTextTitle.getText().toString(); // 最終的にセットされているタイトルを取得.
+                String fixedUrl = editTextUrl.getText().toString(); // 最終的にセットされているURLを取得.
+                long id = hlpr.addUrl(fixedTitle, fixedUrl);  // hlpr.addUrlでDBにタイトルとURLを追加.
+                if (id >= 1){
+                    Toast.makeText(context, "bookmarkテーブルにid = " + id + "が追加されました!", Toast.LENGTH_LONG).show(); // idを表示.
+                }
+                else{
+                    Toast.makeText(context, "bookmarkテーブルへの追加に失敗しました!", Toast.LENGTH_LONG).show();  // 失敗.
+                }
             }
         });
         builder.setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
@@ -268,5 +283,15 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
             }
         });
         builder.create().show();    // ダイアログの作成と表示.
+    }
+
+    // アクティビティの破棄時
+    @Override
+    public void onDestroy() {
+        // hlprの破棄.
+        if (hlpr != null) { // nullでなければ.
+            hlpr.close();   // hlpr.closeで閉じる.
+            hlpr = null;
+        }
     }
 }

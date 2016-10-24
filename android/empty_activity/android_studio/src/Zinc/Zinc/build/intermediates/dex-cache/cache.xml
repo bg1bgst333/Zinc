@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="2a81536ad71f6b5cc2c76d6427db9afa55e76e82">
+        sha1="21fdfcfe2ac13d757af8c5c6308091062452804f">
         <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_7f89a0794ec984f94eaa345d13c64523b9864d52\classes.dex" />
     </item>
     <item
@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.0"
-        sha1="d079c61b8056f3d68d1f2ac029275140f457d566">
+        sha1="0ab6e57319cd50c364bb72f7b110f243ab7feccb">
         <dex dex="C:\Project\Cloud\github.com\Zinc\android\empty_activity\android_studio\src\Zinc\Zinc\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_a9274026224a871b942825aba246f05dca0ffef0\classes.dex" />
     </item>
 

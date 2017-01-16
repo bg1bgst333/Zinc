@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+C:\Project\Cloud\github.com\Zinc\android\empty_activity\eclipse_adt\src\Zinc\.metadata\.plugins\org.eclipse.jdt.core
-2755746640.index
-4092097084.index
-4155686005.index
-818297799.index
